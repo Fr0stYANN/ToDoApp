@@ -1,0 +1,18 @@
+﻿@model IEnumerable<ToDoListApp.Models.Category>
+
+@{ 
+    Layout = null;
+}
+<table class="table table-bordered table-hover">
+    <tr>
+        <td>Id</td>
+        <td>Name</td>
+    </tr>
+    @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@item.CategoryId</td>
+                    <td>@item.CategoryName</td>
+                </tr>
+            }
+</table>

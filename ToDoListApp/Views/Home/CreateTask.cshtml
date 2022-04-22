@@ -1,0 +1,32 @@
+﻿@model ToDoListApp.Models.Task;
+
+@{ 
+    Layout = null;
+}
+<form asp-action="CreateTask">
+    <div>
+        <div class="form-group">
+            <label asp-for="TaskName">Name:</label>
+            <input type="text" asp-for="TaskName" class="form-control form-control-sm" />
+        </div>
+        <div class="form-group">
+            <label asp-for="IsDone">IsDone:</label>
+            <input type="checkbox" asp-for="IsDone" class="form-control form-control-sm" value="false" />
+        </div>
+        <div class="form-group">
+            <label asp-for="DueDate">DueDate:</label>
+            <input type="datetime-local" asp-for="DueDate" class="form-control form-control-sm" />
+        </div>
+        <div class="form-group">
+            <label asp-for="CategoryId">CategoryName:</label>
+            <select asp-for="CategoryId">
+                <option value="sport">Sport</option>
+                <option value="Job">Job</option>
+                <option value="Study">Study</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Сохранить" class="btn btn-outline-secondary" />
+        </div>
+    </div>
+</form>

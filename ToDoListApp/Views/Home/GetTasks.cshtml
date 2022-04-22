@@ -1,0 +1,16 @@
+﻿@model IEnumerable<ToDoListApp.Models.Task>
+@{ 
+    Layout = null;
+}
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css"/>
+<table class="table table-bordered table-hover">
+    @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@item.TaskName</td>
+                    <td>@item.DueDate</td>
+                    <td>@item.CategoryId</td>
+                    <td>@item.IsDone</td>
+                </tr>
+            }
+</table>

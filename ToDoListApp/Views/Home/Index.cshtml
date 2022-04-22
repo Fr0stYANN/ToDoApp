@@ -1,0 +1,90 @@
+﻿@model ToDoListApp.ViewModels.TasksAndCategoryViewModel;
+@{
+    Layout = null;
+}
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+<link rel="stylesheet" href="~/css/site.css"/>
+<form asp-action="CreateTask">
+    <table class="d-flex mx-auto" style="width:200px;">
+        <tr>
+            <td>
+            </td>
+            <td>
+                <input type="text" asp-for="Task.TaskName" class="form-control form-control-sm" style="width:100px; height:100px;" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <input type="datetime-local" asp-for="Task.DueDate" class="form-control form-control-sm" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <select asp-for="Task.CategoryId" asp-items="@(new SelectList(Model.Categories,nameof(Category.CategoryId),nameof(Category.CategoryName)))">
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="mx-auto" style="width:200px;">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+            </td>
+            <td>
+                <a class="btn btn-primary" asp-action="CreateCategory">Create Category</a>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<table class="table table-bordered table-hover">
+    @foreach (
+      var item in Model.Tasks)
+    {
+        if (@item.IsDone == false)
+        {
+        <tr>
+            <td>
+                @item.CategoryId
+            </td>
+
+            <td>
+                @item.TaskName
+            </td>
+
+            <td>
+                @item.DueDate
+            </td>
+            <td>
+                <form asp-action="DeleteTask">
+                    <input type="text" name="Id" hidden value="@item.TaskId"/>
+                    <input type="submit" value="Done" class="btn btn-danger"/>
+                </form> 
+            </td>
+        </tr>
+        }
+    }
+</table>
+<h2>Is Done:</h2>
+<table class="table table-bordered table-hover">
+    @foreach (var item in Model.Tasks)
+    {
+        if (item.IsDone == true)
+        {
+    <tr>
+        <td>
+        </td>
+
+        <td>
+            @item.TaskName;
+        </td>
+
+        <td>
+            @item.DoneDate;
+        </td>
+    </tr>
+        }
+    }
+</table> 
