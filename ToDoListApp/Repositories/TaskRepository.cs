@@ -33,7 +33,7 @@ namespace ToDoListApp.Models
                 return (await db.ExecuteAsync(sqlQuery, task));
             }
         }
-        public async Task<int> Delete(int TaskId,DateTime DoneDate)
+        public async Task<int> Update(int TaskId,DateTime DoneDate)
         {
             var sqlQuery = "UPDATE Tasks SET DoneDate = @DoneDate, IsDone = 1 WHERE TaskId = @Id";
             using (IDbConnection db = new SqlConnection(connectionString))
@@ -47,6 +47,32 @@ namespace ToDoListApp.Models
             using (IDbConnection db = new SqlConnection(connectionString))
             {
                 return(await db.QueryFirstOrDefaultAsync<ToDoListApp.Models.Task>(sqlQuery, new { Id = id }));
+            }
+        }
+        public async Task<int> Delete(int id)
+        {
+            var sqlQuery = "Delete from Tasks where TaskId = @Id";
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                return await db.ExecuteAsync(sqlQuery, new { Id = id });
+            }
+        }
+        public async Task<List<Models.Task>> OrderByDueDate()
+        {
+            var sqlQuery = "SELECT * FROM Tasks Order BY DueDate DESC";
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+               var result =  await db.QueryAsync<Task>(sqlQuery);
+                return result.ToList();
+            }
+        }
+        public async Task<List<Models.Task>> GetByCategory(string CategoryId)
+        {
+            var sqlQuery = "SELECT * FROM Tasks WHERE Category = @CategoryId";
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                var result = await db.QueryAsync<Task>(sqlQuery, new {CategoryId = CategoryId});
+                return result.ToList();
             }
         }
     }

@@ -3,10 +3,18 @@
 @{
     Layout = null;
 }
-<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-<link rel="stylesheet" href="~/css/site.css" />
-<form asp-action="CreateCategory">
-    <label asp-for="Category.CategoryName">Name of Category</label>
-    <input type="text" asp-for="Category.CategoryName" />
-    <input type="submit" class="btn btn-default" value="send"/>
-</form>
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Create Category</title>
+    <link href="@Url.Content("~/lib/bootstrap/dist/css/bootstrap.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <form asp-action="CreateCategory" class="d-flex flex-column mx-auto" style="width:300px; text-align:center; font-family:Oswald; text-transform:uppercase;">
+        <label asp-for="Category.CategoryName">Name of Category</label>
+        <input type="text" asp-for="Category.CategoryName" />
+        <input type="submit" class="btn btn-primary mt-5" value="send" />
+    </form>
+</body>
+</html>

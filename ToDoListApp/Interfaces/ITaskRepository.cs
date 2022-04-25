@@ -9,7 +9,10 @@ namespace ToDoListApp.Models
     {
         Task<List<Models.Task>> GetTasks();
         Task<int> Create(Task task);
-        Task<int> Delete(int TaskId, DateTime DoneDate);
+        Task<int> Update(int TaskId, DateTime DoneDate);
+        Task<int> Delete(int id);
         Task<ToDoListApp.Models.Task> GetTaskById(int id);
+        Task<List<Models.Task>> OrderByDueDate();
+        Task<List<Models.Task>> GetByCategory(string CategoryId);
     }
 }
