@@ -9,6 +9,7 @@ namespace ToDoListApp.Models
     public class Task
     {
         public int TaskId { get; set; }
+        [Required(ErrorMessage = "Task Description Is Required")]
         public string TaskName { get; set; }
         public bool IsDone { get; set; }
         public DateTime? DueDate { get; set; }

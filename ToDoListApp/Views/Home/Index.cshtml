@@ -9,7 +9,6 @@
     <div class="mx-auto" style="width:400px;">
         <div class="d-flex flex-row flex-wrap">
             <input type="text" asp-for="Task.TaskName" class="form-control form-control-sm" style="width:100%; height:50px;" />
-            <span asp-validation-for="Task.TaskName"></span>
             <input type="datetime-local" asp-for="Task.DueDate" class="form-control form-control-sm" style="width:50%;" />
             <select asp-for="Task.CategoryId" style="width:50%;" asp-items="@(new SelectList(Model.Categories,nameof(Category.CategoryId),nameof(Category.CategoryName)))">
             </select>
@@ -18,16 +17,19 @@
             <input type="submit" value="Add" class="btn btn-primary" style="width:50%;" />
             <a class="btn btn-primary" asp-action="CreateCategory" style="width:50%;">Create Category</a>
         </div>
+        <div class="mx-auto" style="width:100%; text-transform:uppercase; text-align:center;">
+            <span asp-validation-for="Task.TaskName" class="text-danger mx-auto" style="width:100px; text-align:center;"></span>
+        </div>
     </div>
 </form>
-<form asp-action="SelectOnlyCategory">
+@*<form asp-action="SelectOnlyCategory">
     <select name="CategoryId">
         @foreach (var item in Model.Categories)
         {
             <option value="@item.CategoryId"><button type="submit">@item.CategoryName</button></option>
         }
     </select>
-</form>
+</form>*@
     <h2 class="mx-auto" style="width: 300px; font-family: Oswald; text-align: center;">Not Completed:</h2>
     @foreach (
      var item in Model.Tasks)
