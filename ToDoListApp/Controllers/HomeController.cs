@@ -23,7 +23,8 @@ namespace ToDoListApp.Controllers
         public async Task<ActionResult> Index()
         {
             TasksAndCategoryViewModel tasksAndCategoryViewModel = new TasksAndCategoryViewModel();
-            tasksAndCategoryViewModel.Tasks = await _taskRepo.OrderByDueDate();
+            tasksAndCategoryViewModel.CompletedTasks = await _taskRepo.GetCompletedTasks();
+            tasksAndCategoryViewModel.NotCompletedTasks = await _taskRepo.GetNotCompletedTasks();
             tasksAndCategoryViewModel.Categories = await _categoryRepo.GetCategories();
             return View(tasksAndCategoryViewModel);
         }
@@ -32,8 +33,9 @@ namespace ToDoListApp.Controllers
         public async Task<ActionResult> CreateTask(Models.Task task)
         {
             TasksAndCategoryViewModel tasksAndCategoryViewModel = new TasksAndCategoryViewModel();
+            tasksAndCategoryViewModel.CompletedTasks = await _taskRepo.GetCompletedTasks();
+            tasksAndCategoryViewModel.NotCompletedTasks = await _taskRepo.GetNotCompletedTasks();
             tasksAndCategoryViewModel.Categories = await _categoryRepo.GetCategories();
-            tasksAndCategoryViewModel.Tasks = await _taskRepo.OrderByDueDate();
             if (!ModelState.IsValid)
             {
                 return View("Index", tasksAndCategoryViewModel);

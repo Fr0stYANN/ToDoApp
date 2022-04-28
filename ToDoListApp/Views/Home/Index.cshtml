@@ -32,7 +32,7 @@
 </form>*@
     <h2 class="mx-auto" style="width: 300px; font-family: Oswald; text-align: center;">Not Completed:</h2>
     @foreach (
-     var item in Model.Tasks)
+     var item in Model.NotCompletedTasks)
     {
         if (@item.IsDone == false)
         {
@@ -71,7 +71,7 @@
         }
     }
     <h2 class="mx-auto" style="width: 200px; font-family: Oswald; text-transform: uppercase; text-align: center;">Is Done:</h2>
-    @foreach (var item in Model.Tasks)
+    @foreach (var item in Model.CompletedTasks)
     {
         if (item.IsDone == true)
         {

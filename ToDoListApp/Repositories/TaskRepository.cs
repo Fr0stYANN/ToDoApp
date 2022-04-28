@@ -16,13 +16,22 @@ namespace ToDoListApp.Models
         {
             connectionString = conn;
         }
-        public async Task<List<ToDoListApp.Models.Task>> GetTasks()
+        public async Task<List<ToDoListApp.Models.Task>> GetCompletedTasks()
         {
             using(IDbConnection db = new SqlConnection(connectionString))
             {
-                var sqlQuery = "Select * from tasks";
+                var sqlQuery = "Select * from tasks WHERE IsDone = 1 ORDER BY DoneDate DESC";
                 var result = await db.QueryAsync<ToDoListApp.Models.Task>(sqlQuery);
                 return result.ToList();                   
+            }
+        }
+        public async Task<List<ToDoListApp.Models.Task>> GetNotCompletedTasks()
+        {
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                var sqlQuery = "SELECT * FROM Tasks WHERE IsDone = 0 Order By CASE WHEN DueDate IS NULL THEN 1 ELSE 0 END ASC, DueDate ASC";
+                var result = await db.QueryAsync<ToDoListApp.Models.Task>(sqlQuery);
+                return result.ToList();
             }
         }
         public async Task<int> Create(Task task)

@@ -7,7 +7,8 @@ namespace ToDoListApp.Models
 {
     public interface ITaskRepository
     {
-        Task<List<Models.Task>> GetTasks();
+        Task<List<Models.Task>> GetCompletedTasks();
+        Task<List<Models.Task>> GetNotCompletedTasks();
         Task<int> Create(Task task);
         Task<int> Update(int TaskId, DateTime DoneDate);
         Task<int> Delete(int id);
