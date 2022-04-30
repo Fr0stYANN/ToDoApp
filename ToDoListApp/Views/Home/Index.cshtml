@@ -30,6 +30,13 @@
         }
     </select>
 </form>*@
+<div>
+    <form asp-action="SortByCategory">
+        <select asp-for="Task.CategoryId" name ="SelectCategory" style="width:50%;" asp-items="@(new SelectList(Model.Categories,nameof(Category.CategoryId),nameof(Category.CategoryName)))">
+        </select>
+        <input type="submit" value="send"/>
+    </form>
+</div>
     <h2 class="mx-auto" style="width: 300px; font-family: Oswald; text-align: center;">Not Completed:</h2>
     @foreach (
      var item in Model.NotCompletedTasks)

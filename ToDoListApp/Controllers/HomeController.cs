@@ -81,14 +81,14 @@ namespace ToDoListApp.Controllers
             }
             return View("Index", tasksAndCategoryViewModel);
         }
-        //public async Task<ActionResult> SelectOnlyCategory(string CategoryId)
-        //{
-        //    TasksAndCategoryViewModel tasksAndCategoryViewModel = new TasksAndCategoryViewModel();
-        //    if (ModelState.IsValid)
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View("Index", tasksAndCategoryViewModel);
-        //}
+        public async Task<ActionResult> SortByCategory(string CategoryId)
+        {
+            TasksAndCategoryViewModel tasksAndCategoryViewModel = new TasksAndCategoryViewModel();
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return View("Index", tasksAndCategoryViewModel);
+        }
     }
 }

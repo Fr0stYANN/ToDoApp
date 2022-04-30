@@ -34,6 +34,15 @@ namespace ToDoListApp.Models
                 return result.ToList();
             }
         }
+        public async Task<List<ToDoListApp.Models.Task>> GetNotCompletedTasks(string CategoryId)
+        {
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                var sqlQuery = "SELECT * FROM Tasks WHERE IsDone = 0 Order By CASE WHEN DueDate IS NULL THEN 1 ELSE 0 END ASC, DueDate ASC";
+                var result = await db.QueryAsync<ToDoListApp.Models.Task>(sqlQuery);
+                return result.ToList();
+            }
+        }
         public async Task<int> Create(Task task)
         {
             using(IDbConnection db = new SqlConnection(connectionString))
