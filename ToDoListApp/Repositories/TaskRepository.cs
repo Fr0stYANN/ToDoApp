@@ -84,9 +84,18 @@ namespace ToDoListApp.Models
                 return result.ToList();
             }
         }
-        public async Task<List<Models.Task>> GetByCategory(string CategoryId)
+        public async Task<List<Models.Task>> GetCompletedByCategory(int CategoryId)
         {
-            var sqlQuery = "SELECT * FROM Tasks WHERE Category = @CategoryId";
+            var sqlQuery = "SELECT * FROM Tasks WHERE CategoryId = @CategoryId AND IsDone = 1 Order By DoneDate desc";
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                var result = await db.QueryAsync<Task>(sqlQuery, new { CategoryId = CategoryId });
+                return result.ToList();
+            }
+        }
+        public async Task<List<Models.Task>> GetNotCompletedByCategory(int CategoryId)
+        {
+            var sqlQuery = "SELECT * FROM Tasks WHERE CategoryId = @CategoryId AND IsDone = 0 Order By CASE WHEN DueDate IS NULL THEN 1 ELSE 0 END ASC, DueDate ASC";
             using (IDbConnection db = new SqlConnection(connectionString))
             {
                 var result = await db.QueryAsync<Task>(sqlQuery, new {CategoryId = CategoryId});

@@ -81,13 +81,28 @@ namespace ToDoListApp.Controllers
             }
             return View("Index", tasksAndCategoryViewModel);
         }
-        public async Task<ActionResult> SortByCategory(string CategoryId)
+        public async Task<ActionResult> SortNotCompletedByCategory(int CategoryId)
         {
             TasksAndCategoryViewModel tasksAndCategoryViewModel = new TasksAndCategoryViewModel();
-            if (ModelState.IsValid)
+            tasksAndCategoryViewModel.CompletedTasks = await _taskRepo.GetCompletedTasks();
+            if(tasksAndCategoryViewModel.CompletedTasks == null)
             {
-                return RedirectToAction(nameof(Index));
+                throw new Exception("There is no Task for such Category");
             }
+            tasksAndCategoryViewModel.NotCompletedTasks = await _taskRepo.GetNotCompletedByCategory(CategoryId);
+            tasksAndCategoryViewModel.Categories = await _categoryRepo.GetCategories();
+            //if (ModelState.IsValid)
+            //{
+            //    return RedirectToAction(nameof(Index));
+            //}
+            return View("Index", tasksAndCategoryViewModel);
+        }
+        public async Task<IActionResult> SortDoneByCategory(int CategoryId)
+        {
+            TasksAndCategoryViewModel tasksAndCategoryViewModel = new TasksAndCategoryViewModel();
+            tasksAndCategoryViewModel.CompletedTasks = await _taskRepo.GetCompletedByCategory(CategoryId);
+            tasksAndCategoryViewModel.NotCompletedTasks = await _taskRepo.GetNotCompletedTasks();
+            tasksAndCategoryViewModel.Categories = await _categoryRepo.GetCategories();
             return View("Index", tasksAndCategoryViewModel);
         }
     }

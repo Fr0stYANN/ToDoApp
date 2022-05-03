@@ -14,6 +14,7 @@ namespace ToDoListApp.Models
         Task<int> Delete(int id);
         Task<ToDoListApp.Models.Task> GetTaskById(int id);
         Task<List<Models.Task>> OrderByDueDate();
-        Task<List<Models.Task>> GetByCategory(string CategoryId);
+        Task<List<Models.Task>> GetCompletedByCategory(int CategoryId);
+        Task<List<Models.Task>> GetNotCompletedByCategory(int CategoryId);
     }
 }
