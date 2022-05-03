@@ -9,7 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ToDoListApp.Models;
+using BusinessLogic.Models;
+using BusinessLogic.Interfaces;
+using ToDoListApp.SQL;
 
 namespace ToDoListApp
 {

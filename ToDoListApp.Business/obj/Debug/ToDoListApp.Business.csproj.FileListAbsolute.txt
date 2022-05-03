@@ -1,0 +1,6 @@
+C:\Users\Phoenix\Desktop\Ism Company Course Projects\ToDoListApp\ToDoListApp.Business\bin\Debug\ToDoListApp.Business.dll
+C:\Users\Phoenix\Desktop\Ism Company Course Projects\ToDoListApp\ToDoListApp.Business\bin\Debug\ToDoListApp.Business.pdb
+C:\Users\Phoenix\Desktop\Ism Company Course Projects\ToDoListApp\ToDoListApp.Business\obj\Debug\ToDoListApp.Business.csproj.AssemblyReference.cache
+C:\Users\Phoenix\Desktop\Ism Company Course Projects\ToDoListApp\ToDoListApp.Business\obj\Debug\ToDoListApp.Business.csproj.CoreCompileInputs.cache
+C:\Users\Phoenix\Desktop\Ism Company Course Projects\ToDoListApp\ToDoListApp.Business\obj\Debug\ToDoListApp.Business.dll
+C:\Users\Phoenix\Desktop\Ism Company Course Projects\ToDoListApp\ToDoListApp.Business\obj\Debug\ToDoListApp.Business.pdb

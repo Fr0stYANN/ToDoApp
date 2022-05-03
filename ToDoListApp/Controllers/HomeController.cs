@@ -6,8 +6,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using ToDoListApp.Models;
 using ToDoListApp.ViewModels;
+using BusinessLogic;
+using BusinessLogic.Models;
+using BusinessLogic.Interfaces;
+using ToDoListApp.SQL;
 
 namespace ToDoListApp.Controllers
 {
@@ -30,7 +33,7 @@ namespace ToDoListApp.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateTask(Models.Task task)
+        public async Task<ActionResult> CreateTask(BusinessLogic.Models.Task task)
         {
             TasksAndCategoryViewModel tasksAndCategoryViewModel = new TasksAndCategoryViewModel();
             tasksAndCategoryViewModel.CompletedTasks = await _taskRepo.GetCompletedTasks();
@@ -47,7 +50,7 @@ namespace ToDoListApp.Controllers
         public async Task<ActionResult> UpdateTask(int Id)
         {
             TasksAndCategoryViewModel tasksAndCategoryViewModel = new TasksAndCategoryViewModel();
-            Models.Task task = await _taskRepo.GetTaskById(Id);
+            BusinessLogic.Models.Task task = await _taskRepo.GetTaskById(Id);
             task.IsDone = true;
             if (task.TaskId != null) {
                 await _taskRepo.Update(task.TaskId, DateTime.Now);

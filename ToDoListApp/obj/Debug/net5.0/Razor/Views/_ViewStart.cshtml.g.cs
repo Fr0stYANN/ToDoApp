@@ -21,13 +21,13 @@ using ToDoListApp;
 #nullable disable
 #nullable restore
 #line 2 "C:\Users\Phoenix\Desktop\Ism Company Course Projects\ToDoListApp\ToDoListApp\Views\_ViewImports.cshtml"
-using ToDoListApp.Models;
+using BusinessLogic.Models;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"7091c65830b0329e613be026ede8a57552863778", @"/Views/_ViewStart.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"52f945efe976b1d64c78b43e826c929a1c767a43", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"130b9ceabe139cf6186d7825af57e11ea15f6969", @"/Views/_ViewImports.cshtml")]
     public class Views__ViewStart : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         #pragma warning disable 1998
