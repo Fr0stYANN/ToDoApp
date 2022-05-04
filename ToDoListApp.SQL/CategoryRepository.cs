@@ -16,20 +16,20 @@ namespace ToDoListApp.SQL
         {
             connectionString = conn;
         }
-        public async Task<List<Category>> GetCategories()
+        public List<Category> GetCategories()
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                var result = await db.QueryAsync<Category>("Select * From Categories");
+                var result = db.Query<Category>("Select * From Categories");
                 return result.ToList();
             }
         }
-        public async Task<int> CreateCategory(Category category)
+        public int CreateCategory(Category category)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
                 var sqlQuery = "Insert INTO Categories(CategoryName) VALUES (@CategoryName)";
-                return (await db.ExecuteAsync(sqlQuery, category));
+                return db.Execute(sqlQuery, category);
             }
         }
     }

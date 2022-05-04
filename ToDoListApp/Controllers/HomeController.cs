@@ -26,7 +26,8 @@ namespace ToDoListApp.Controllers
         public async Task<ActionResult> Index()
         {
             TasksAndCategoryViewModel tasksAndCategoryViewModel = new TasksAndCategoryViewModel();
-            tasksAndCategoryViewModel.CompletedTasks = await _taskRepo.GetCompletedTasks();
+            var model  = await _taskRepo.GetCompletedTasks();
+            var model = await _taskRepo.GetCompletedTasks();
             tasksAndCategoryViewModel.NotCompletedTasks = await _taskRepo.GetNotCompletedTasks();
             tasksAndCategoryViewModel.Categories = await _categoryRepo.GetCategories();
             return View(tasksAndCategoryViewModel);
