@@ -12,6 +12,7 @@ namespace ToDoListApp.XML
 {
     public class XmlTaskRepository : ITaskRepository
     {
+        public string ProviderName => "Xml";
         XmlSerializer xmlSerializer = new XmlSerializer(typeof(DataContainer));
         public Task<int> Create(Task task)
         {
@@ -47,12 +48,6 @@ namespace ToDoListApp.XML
             }
             return 0;
         }
-
-        public Task<List<Task>> GetCompletedByCategory(int CategoryId)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<Task> GetCompletedTasks()
         {
             DataContainer? data;
@@ -66,12 +61,6 @@ namespace ToDoListApp.XML
                 return result.ToList();
             }
         }
-
-        public Task<List<Task>> GetNotCompletedByCategory(int CategoryId)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<Task> GetNotCompletedTasks()
         {
             using (FileStream fs = new FileStream((@"C:\Users\Phoenix\Desktop\Ism Company Course Projects\ToDoListApp\ToDoListApp.XML\Tasks.xml"), FileMode.OpenOrCreate))
@@ -84,17 +73,6 @@ namespace ToDoListApp.XML
                 return result.ToList();
             }
         }
-
-        public Task<Task> GetTaskById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<Task>> OrderByDueDate()
-        {
-            throw new NotImplementedException();
-        }
-
         public int Update(int TaskId, DateTime DoneDate)
         {
             DataContainer? data;

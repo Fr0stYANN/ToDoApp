@@ -27,12 +27,11 @@ namespace ToDoListApp
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        { 
-            string ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Initial Catalog = ToDoListDB; Integrated Security=True";
-            services.AddTransient<ITaskRepository, XmlTaskRepository>(provider => new XmlTaskRepository());
-            //services.AddTransient<ITaskRepository, TaskRepository>(provider => new TaskRepository(ConnectionString));
-            //services.AddTransient<ICategoryRepository, CategoryRepository>(provider => new CategoryRepository(ConnectionString));
-            services.AddTransient<ICategoryRepository, XmlCategoryRepository>(provider => new XmlCategoryRepository());
+        {
+            services.AddTransient<ITaskRepository, TaskRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<ICategoryRepository, XmlCategoryRepository>();
+            services.AddTransient<ITaskRepository, XmlTaskRepository>();
             services.AddControllersWithViews();
             services.AddDatabaseDeveloperPageExceptionFilter();
         }

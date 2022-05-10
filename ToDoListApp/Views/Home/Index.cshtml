@@ -4,6 +4,13 @@
 }
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
 <link rel="stylesheet" href="~/css/site.css" />
+<form asp-action="ChangeDataProvider">
+    <select name="ProviderName">
+        <option value="SQL">Sql</option>
+        <option selected value="Xml">Xml</option>
+    </select>
+    <input type="submit" value="send"/>
+</form>
 <h2 class="mx-auto" style="text-transform:uppercase; font-family:Oswald; width:300px; text-align:center;">Add Task</h2>
 <form asp-action="CreateTask" style="text-transform:uppercase; font-family:Oswald;">
     <div class="mx-auto" style="width:400px;">

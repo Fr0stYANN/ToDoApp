@@ -12,6 +12,7 @@ namespace ToDoListApp.XML
 {
     public class XmlCategoryRepository : ICategoryRepository
     {
+        public string ProviderName => "Xml";
         XmlSerializer xmlSerializer = new XmlSerializer(typeof(DataContainer));
         public int CreateCategory(Category category)
         {
@@ -23,10 +24,10 @@ namespace ToDoListApp.XML
                     category.CategoryId = 1;
                 else
                     category.CategoryId = data.Categories.Count + 1;
+                data.Categories.Add(category);
             }
             using (FileStream fs = new FileStream(@"C:\Users\Phoenix\Desktop\Ism Company Course Projects\ToDoListApp\ToDoListApp.XML\Tasks.xml", FileMode.Truncate))
             {
-                data.Categories.Add(category);
                 xmlSerializer.Serialize(fs, data);
             }
             return 0;

@@ -9,6 +9,14 @@
       <CategoryId>0</CategoryId>
       <DoneDate xsi:nil="true" />
     </Task>
+    <Task>
+      <TaskId>2</TaskId>
+      <TaskName>HelloItSREALLLYASYNC????</TaskName>
+      <IsDone>true</IsDone>
+      <DueDate>2022-05-25T19:33:00</DueDate>
+      <CategoryId>2</CategoryId>
+      <DoneDate>2022-05-10T19:39:33.8764784+03:00</DoneDate>
+    </Task>
   </Tasks>
   <Categories>
     <Category>

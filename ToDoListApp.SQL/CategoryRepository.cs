@@ -17,14 +17,11 @@ namespace ToDoListApp.SQL
 {
     public class CategoryRepository : ICategoryRepository
     {
-        string connectionString = null;
-        public CategoryRepository(string conn)
-        {
-            connectionString = conn;
-        }
+        public string ProviderName => "SQL";
+        string ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Initial Catalog = ToDoListDB; Integrated Security=True";
         public List<Category> GetCategories()
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = new SqlConnection(ConnectionString))
             {
                 var res = db.Query<Category>("Select * From Categories");
                 return res.ToList();
@@ -32,7 +29,7 @@ namespace ToDoListApp.SQL
         }
         public int CreateCategory(Category category)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = new SqlConnection(ConnectionString))
             {
                 var sqlQuery = "Insert INTO Categories(CategoryName) VALUES (@CategoryName)";
                 return db.Execute(sqlQuery, category);

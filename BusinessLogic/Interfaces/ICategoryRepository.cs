@@ -8,6 +8,7 @@ namespace BusinessLogic.Interfaces
 {
     public interface ICategoryRepository
     {
+        string ProviderName { get; }
         List<Category> GetCategories();
         int CreateCategory(Category category);
     }
