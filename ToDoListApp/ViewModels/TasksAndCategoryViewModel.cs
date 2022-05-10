@@ -7,10 +7,10 @@ namespace ToDoListApp.ViewModels
 {
     public class TasksAndCategoryViewModel
     {
-        public BusinessLogic.Models.Task Task { get; set; }
-        public Category Category { get; set; }
-        public List<BusinessLogic.Models.Task> CompletedTasks { get; set; }
-        public List<BusinessLogic.Models.Task> NotCompletedTasks { get; set; }
-        public List<Category> Categories { get; set; }
+        public BusinessLogic.Models.Task? Task { get; set; }
+        public Category? Category { get; set; }
+        public List<BusinessLogic.Models.Task>? CompletedTasks { get; set; }
+        public List<BusinessLogic.Models.Task>? NotCompletedTasks { get; set; }
+        public List<Category>? Categories { get; set; }
     }
 }

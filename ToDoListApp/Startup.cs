@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using BusinessLogic.Models;
 using BusinessLogic.Interfaces;
 using ToDoListApp.SQL;
+using ToDoListApp.XML;
 
 namespace ToDoListApp
 {
@@ -28,8 +29,10 @@ namespace ToDoListApp
         public void ConfigureServices(IServiceCollection services)
         { 
             string ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Initial Catalog = ToDoListDB; Integrated Security=True";
-            services.AddTransient<ITaskRepository, TaskRepository>(provider => new TaskRepository(ConnectionString));
-            services.AddTransient<ICategoryRepository, CategoryRepository>(provider => new CategoryRepository(ConnectionString));
+            services.AddTransient<ITaskRepository, XmlTaskRepository>(provider => new XmlTaskRepository());
+            //services.AddTransient<ITaskRepository, TaskRepository>(provider => new TaskRepository(ConnectionString));
+            //services.AddTransient<ICategoryRepository, CategoryRepository>(provider => new CategoryRepository(ConnectionString));
+            services.AddTransient<ICategoryRepository, XmlCategoryRepository>(provider => new XmlCategoryRepository());
             services.AddControllersWithViews();
             services.AddDatabaseDeveloperPageExceptionFilter();
         }
@@ -49,7 +52,6 @@ namespace ToDoListApp
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
 
             app.UseAuthorization();

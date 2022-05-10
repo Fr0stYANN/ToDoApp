@@ -4,6 +4,12 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Data.SqlClient;
 using Dapper;
 using BusinessLogic.Models;
 using BusinessLogic.Interfaces;
@@ -20,8 +26,8 @@ namespace ToDoListApp.SQL
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                var result = db.Query<Category>("Select * From Categories");
-                return result.ToList();
+                var res = db.Query<Category>("Select * From Categories");
+                return res.ToList();
             }
         }
         public int CreateCategory(Category category)

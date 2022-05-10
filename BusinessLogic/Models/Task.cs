@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System;
+using System.Xml.Serialization;
+using System.Collections.Generic;
 
 namespace BusinessLogic.Models
 {
@@ -16,5 +19,9 @@ namespace BusinessLogic.Models
         public DateTime? DueDate { get; set; }
         public int? CategoryId { get; set; }
         public DateTime? DoneDate { get; set; }
+        public Task()
+        {
+
+        }
     }
 }

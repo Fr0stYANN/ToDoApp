@@ -9,12 +9,12 @@ namespace BusinessLogic.Interfaces
     {
         List<BusinessLogic.Models.Task> GetCompletedTasks();
         List<BusinessLogic.Models.Task> GetNotCompletedTasks();
-        int Create(BusinessLogic.Models.Task Task);
+        Task<int> Create(BusinessLogic.Models.Task Task);
         int Update(int TaskId, DateTime DoneDate);
         int Delete(int id);
-        BusinessLogic.Models.Task GetTaskById(int id);
-        List<BusinessLogic.Models.Task> OrderByDueDate();
-        List<BusinessLogic.Models.Task> GetCompletedByCategory(int CategoryId);
-        List<BusinessLogic.Models.Task> GetNotCompletedByCategory(int CategoryId);
+        Task<BusinessLogic.Models.Task> GetTaskById(int id);
+        Task<List<BusinessLogic.Models.Task>> OrderByDueDate();
+        Task<List<BusinessLogic.Models.Task>> GetCompletedByCategory(int CategoryId);
+        Task<List<BusinessLogic.Models.Task>> GetNotCompletedByCategory(int CategoryId);
     }
 }

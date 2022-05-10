@@ -10,7 +10,11 @@
         <div class="d-flex flex-row flex-wrap">
             <input type="text" asp-for="Task.TaskName" class="form-control form-control-sm" style="width:100%; height:50px;" />
             <input type="datetime-local" asp-for="Task.DueDate" class="form-control form-control-sm" style="width:50%;" />
-            <select asp-for="Task.CategoryId" style="width:50%;" asp-items="@(new SelectList(Model.Categories,nameof(Category.CategoryId),nameof(Category.CategoryName)))">
+            <select asp-for="Task.CategoryId" style="width:50%;">
+                @foreach(var category in Model.Categories)
+            {
+                <option value="@category.CategoryId">@category.CategoryName</option>
+            }
             </select>
         </div>
         <div class="d-flex flex-row">
@@ -18,7 +22,7 @@
             <a class="btn btn-primary" asp-action="CreateCategory" style="width:50%;">Create Category</a>
         </div>
         <div class="mx-auto" style="width:100%; text-transform:uppercase; text-align:center;">
-            <span asp-validation-for="Task.TaskName" class="text-danger mx-auto" style="width:100px; text-align:center;"></span>
+            <span asp-validation-for="Task.TaskName" class="text-danger mx-auto" style="width:100px; text-align:center; font-family=Oswald;"></span>
         </div>
     </div>
 </form>
@@ -30,21 +34,10 @@
         }
     </select>
 </form>*@
-<div class="d-flex flex-row mx-auto" style="width:150px; text-transform:uppercase; font-family:Oswald;">
-    <form asp-action="SortNotCompletedByCategory">
-        <select name="CategoryId" style="width:50%;" asp-items="@(new SelectList(Model.Categories,nameof(Category.CategoryId),nameof(Category.CategoryName)))">
-        </select>
-        <input type="submit" value="send" class="btn btn-primary" />
-    </form>
-</div>
     <h2 class="mx-auto" style="width: 300px; font-family: Oswald; text-align: center;">Not Completed:</h2>
     @foreach (
      var item in Model.NotCompletedTasks)
     {
-        if (@item.IsDone == false)
-        {
-
-
             <div class="d-flex flex-row mx-auto" style="width: 800px; border: 1px solid black; text-transform: uppercase; font-family: Oswald; ">
                 <div style="width:15%" class="p-3 text-center">
                     @if (item.DueDate.HasValue)
@@ -75,20 +68,10 @@
                     </form>
                 </div>
             </div>
-        }
     }
-<div class="d-flex flex-row mx-auto" style="width:150px; text-transform:uppercase; font-family:Oswald;">
-    <form asp-action="SortDoneByCategory">
-        <select name="CategoryId" style="width:50%;" asp-items="@(new SelectList(Model.Categories,nameof(Category.CategoryId),nameof(Category.CategoryName)))">
-        </select>
-        <input type="submit" value="send" class="btn btn-primary"/>
-    </form>
-</div>
     <h2 class="mx-auto" style="width: 200px; font-family: Oswald; text-transform: uppercase; text-align: center;">Is Done:</h2>
     @foreach (var item in Model.CompletedTasks)
     {
-        if (item.IsDone == true)
-        {
             <div class="d-flex flex-row mx-auto" style="width: 800px; text-transform: uppercase; font-family: Oswald; border:1px solid black;">
                 <div style="width: 15%; text-align: center; " class="p-3">
                     @item.DoneDate
@@ -112,5 +95,4 @@
                     </form>
                 </div>
             </div>
-        }
     }

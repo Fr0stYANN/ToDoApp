@@ -16,5 +16,8 @@
         <input type="text" asp-for="Category.CategoryName" />
         <input type="submit" class="btn btn-primary mt-5" value="send" />
     </form>
+    <div class="mx-auto" style="width:100%; text-transform:uppercase; text-align:center;">
+        <span asp-validation-for="Category.CategoryName" class="text-danger mx-auto" style="width:100px; text-align:center;"></span>
+    </div>
 </body>
 </html>
