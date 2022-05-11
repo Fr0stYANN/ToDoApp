@@ -13,7 +13,9 @@ using BusinessLogic.Models;
 using BusinessLogic.Interfaces;
 using ToDoListApp.SQL;
 using ToDoListApp.XML;
-
+using AutoMapper;
+using ToDoListApp.ViewModels;
+using Task = BusinessLogic.Models.Task;
 namespace ToDoListApp
 {
     public class Startup
@@ -28,10 +30,14 @@ namespace ToDoListApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //var config = new MapperConfiguration(cfg => cfg.CreateMap<List<Task>, List<CompletedTasksViewModel>>());
+            //var mapper = config.CreateMapper();
+
             services.AddTransient<ITaskRepository, TaskRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<ICategoryRepository, XmlCategoryRepository>();
             services.AddTransient<ITaskRepository, XmlTaskRepository>();
+            services.AddAutoMapper(typeof(AutoMapperProfile));
             services.AddControllersWithViews();
             services.AddDatabaseDeveloperPageExceptionFilter();
         }

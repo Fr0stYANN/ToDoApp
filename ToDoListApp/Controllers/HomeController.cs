@@ -17,103 +17,105 @@ using System.Xml;
 using System.IO;
 using ToDoListApp.XML;
 using Microsoft.Extensions.DependencyInjection;
-
+using AutoMapper;
+using Task = BusinessLogic.Models.Task;
 namespace ToDoListApp.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ITaskRepository taskRepo;
         private readonly ICategoryRepository categoryRepo;
-        public HomeController(IEnumerable<ITaskRepository> taskRepositories, IEnumerable<ICategoryRepository> categoryRepositories)
+        private readonly IMapper mapper;
+        public HomeController(IEnumerable<ITaskRepository> taskRepositories, IEnumerable<ICategoryRepository> categoryRepositories, IMapper mapper)
         {
             taskRepo = taskRepositories.Where(t => t.ProviderName == DataProvider.CurrentProvider).FirstOrDefault();
             categoryRepo = categoryRepositories.Where(t => t.ProviderName == DataProvider.CurrentProvider).FirstOrDefault();
+            this.mapper = mapper;
         }
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            TasksAndCategoryViewModel tasksAndCategoryViewModel = new TasksAndCategoryViewModel();
-            tasksAndCategoryViewModel.CompletedTasks = /*await*/ taskRepo.GetCompletedTasks();
-            tasksAndCategoryViewModel.NotCompletedTasks =  taskRepo.GetNotCompletedTasks();
-            tasksAndCategoryViewModel.Categories =  categoryRepo.GetCategories();
-            return View(tasksAndCategoryViewModel);
+            //IndexViewModel indexViewModel = new IndexViewModel();
+            var completedTasks = taskRepo.GetCompletedTasks();
+            var notCompletedTasks = taskRepo.GetNotCompletedTasks();
+            var categories = categoryRepo.GetCategories();
+            return View("Index", new IndexViewModel()
+            {
+                Categories = mapper.
+                Map<List<CategoriesViewModel>>(categories),
+                CompletedTasksViewModels = mapper.
+                Map<List<CompletedTasksViewModel>>(completedTasks),
+                NotCompletedTasksViewModels = mapper.
+                Map<List<NotCompletedTasksViewModel>>(notCompletedTasks)
+            });
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateTask(BusinessLogic.Models.Task task)
+        public ActionResult CreateTask(CreateTaskViewModel createTaskViewModel)
         {
-            TasksAndCategoryViewModel tasksAndCategoryViewModel = new TasksAndCategoryViewModel();
             if (!ModelState.IsValid)
             {
-                tasksAndCategoryViewModel.CompletedTasks = /*await*/ taskRepo.GetCompletedTasks();
-                tasksAndCategoryViewModel.NotCompletedTasks = taskRepo.GetNotCompletedTasks();
-                tasksAndCategoryViewModel.Categories =  categoryRepo.GetCategories();
-                return View("CreateCategory");
+                var completedTasks = taskRepo.GetCompletedTasks();
+                var notCompletedTasks = taskRepo.GetNotCompletedTasks();
+                var categories = categoryRepo.GetCategories();
+                return View("Index", new IndexViewModel()
+                {
+                    Categories = mapper.
+                    Map<List<CategoriesViewModel>>(categories),
+                    CompletedTasksViewModels = mapper.
+                    Map<List<CompletedTasksViewModel>>(completedTasks),
+                    NotCompletedTasksViewModels = mapper.
+                    Map<List<NotCompletedTasksViewModel>>(notCompletedTasks)
+                });
             }
-            /*await*/ taskRepo.Create(task);
+            Task Task = mapper.Map<Task>(createTaskViewModel);
+            /*await*/
+            taskRepo.Create(Task);
             return RedirectToAction(nameof(Index));
         }
         [HttpPost]
-        public async Task<ActionResult> UpdateTask(int Id)
+        public ActionResult UpdateTask(int Id)
         {
-            TasksAndCategoryViewModel tasksAndCategoryViewModel = new TasksAndCategoryViewModel();
-                taskRepo.Update(Id, DateTime.Now);
-                return RedirectToAction(nameof(Index));
+            taskRepo.Update(Id, DateTime.Now);
+            return RedirectToAction(nameof(Index));
         }
-        public async Task<ActionResult> CreateCategory()
+        public ActionResult CreateCategory()
         {
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateCategory(Category category)
+        public ActionResult CreateCategory(CreateCategoryViewModel createCategoryViewModel)
         {
-            TasksAndCategoryViewModel tasksAndCategoryViewModel = new TasksAndCategoryViewModel();
             if (!ModelState.IsValid)
             {
-                tasksAndCategoryViewModel.CompletedTasks = /*await*/ taskRepo.GetCompletedTasks();
-                tasksAndCategoryViewModel.NotCompletedTasks = taskRepo.GetNotCompletedTasks();
-                tasksAndCategoryViewModel.Categories = categoryRepo.GetCategories();
-                return View("CreateCategory");
+                var completedTasks = taskRepo.GetCompletedTasks();
+                var notCompletedTasks = taskRepo.GetNotCompletedTasks();
+                var categories = categoryRepo.GetCategories();
+                return View("Index", new IndexViewModel()
+                {
+                    Categories = mapper.
+                    Map<List<CategoriesViewModel>>(categories),
+                    CompletedTasksViewModels = mapper.
+                    Map<List<CompletedTasksViewModel>>(completedTasks),
+                    NotCompletedTasksViewModels = mapper.
+                    Map<List<NotCompletedTasksViewModel>>(notCompletedTasks)
+                });
             }
+            Category category = mapper.Map<Category>(createCategoryViewModel);
             categoryRepo.CreateCategory(category);
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public async Task<ActionResult> DeleteTask(int Id)
+        public ActionResult DeleteTask(int Id)
         {
-            TasksAndCategoryViewModel tasksAndCategoryViewModel = new TasksAndCategoryViewModel();
             if (ModelState.IsValid)
             {
                  taskRepo.Delete(Id);
                 return RedirectToAction(nameof(Index));
             }
-            return View("Index", tasksAndCategoryViewModel);
+            return RedirectToAction(nameof(Index));
         }
-        //public async Task<ActionResult> SortNotCompletedByCategory(int CategoryId)
-        //{
-        //    TasksAndCategoryViewModel tasksAndCategoryViewModel = new TasksAndCategoryViewModel();
-        //    tasksAndCategoryViewModel.CompletedTasks = /*await*/ taskRepo.GetCompletedTasks();
-        //    if (tasksAndCategoryViewModel.CompletedTasks == null)
-        //    {
-        //        throw new Exception("There is no Task for such Category");
-        //    }
-        //    tasksAndCategoryViewModel.NotCompletedTasks = await taskRepo.GetNotCompletedByCategory(CategoryId);
-        //    tasksAndCategoryViewModel.Categories =  categoryRepo.GetCategories();
-        //    //if (ModelState.IsValid)
-        //    //{
-        //    //    return RedirectToAction(nameof(Index));
-        //    //}
-        //    return View("Index", tasksAndCategoryViewModel);
-        //}
-        //public async Task<IActionResult> SortDoneByCategory(int CategoryId)
-        //{
-        //    TasksAndCategoryViewModel tasksAndCategoryViewModel = new TasksAndCategoryViewModel();
-        //    tasksAndCategoryViewModel.CompletedTasks = await taskRepo.GetCompletedByCategory(CategoryId);
-        //    tasksAndCategoryViewModel.NotCompletedTasks =  taskRepo.GetNotCompletedTasks();
-        //    tasksAndCategoryViewModel.Categories =  categoryRepo.GetCategories();
-        //    return View("Index", tasksAndCategoryViewModel);
-        //}
-        public async Task<IActionResult> ChangeDataProvider(string ProviderName)
+        public IActionResult ChangeDataProvider(string ProviderName)
         {
             DataProvider.ChangeProvider(ProviderName);
             return RedirectToAction("Index");

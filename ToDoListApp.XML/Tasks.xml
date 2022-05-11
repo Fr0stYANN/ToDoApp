@@ -4,18 +4,18 @@
     <Task>
       <TaskId>1</TaskId>
       <TaskName>HelloItSREALLLYASYNC????</TaskName>
-      <IsDone>false</IsDone>
+      <IsDone>true</IsDone>
       <DueDate xsi:nil="true" />
       <CategoryId>0</CategoryId>
-      <DoneDate xsi:nil="true" />
+      <DoneDate>2022-05-11T12:17:09.1094636+03:00</DoneDate>
     </Task>
     <Task>
-      <TaskId>2</TaskId>
-      <TaskName>HelloItSREALLLYASYNC????</TaskName>
-      <IsDone>true</IsDone>
-      <DueDate>2022-05-25T19:33:00</DueDate>
+      <TaskId>3</TaskId>
+      <TaskName>WASSSUPPPPPPPPPPP</TaskName>
+      <IsDone>false</IsDone>
+      <DueDate>2022-05-31T12:15:00</DueDate>
       <CategoryId>2</CategoryId>
-      <DoneDate>2022-05-10T19:39:33.8764784+03:00</DoneDate>
+      <DoneDate xsi:nil="true" />
     </Task>
   </Tasks>
   <Categories>
@@ -26,6 +26,10 @@
     <Category>
       <CategoryId>2</CategoryId>
       <CategoryName>Sport</CategoryName>
+    </Category>
+    <Category>
+      <CategoryId>3</CategoryId>
+      <CategoryName>sadasdasd</CategoryName>
     </Category>
   </Categories>
 </DataContainer>
