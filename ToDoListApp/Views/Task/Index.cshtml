@@ -1,0 +1,105 @@
+﻿@model ToDoListApp.ViewModels.IndexViewModel;
+@{
+    Layout = null;
+}
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+<link rel="stylesheet" href="~/css/site.css" />
+<form asp-action="ChangeDataProvider">
+    <select name="ProviderName">
+        <option value="SQL">Sql</option>
+        <option selected value="Xml">Xml</option>
+    </select>
+    <input type="submit" value="send"/>
+</form>
+<h2 class="mx-auto" style="text-transform:uppercase; font-family:Oswald; width:300px; text-align:center;">Add Task</h2>
+<form asp-action="CreateTask" style="text-transform:uppercase; font-family:Oswald;">
+    <div class="mx-auto" style="width:400px;">
+        <div class="d-flex flex-row flex-wrap">
+            <input type="text" asp-for="CreateTaskViewModel.TaskName" class="form-control form-control-sm" style="width:100%; height:50px;" />
+            <input type="datetime-local" asp-for="CreateTaskViewModel.DueDate" class="form-control form-control-sm" style="width:50%;" />
+            <select asp-for="CreateTaskViewModel.CategoryId" style="width:50%;">
+                @foreach(var category in Model.Categories)
+            {
+                <option value="@category.CategoryId">@category.CategoryName</option>
+            }
+            </select>
+        </div>
+        <div class="d-flex flex-row">
+            <input type="submit" value="Add" class="btn btn-primary" style="width:50%;" />
+            <a class="btn btn-primary" asp-action="CreateCategory" style="width:50%;">Create Category</a>
+        </div>
+        <div class="mx-auto" style="width:100%; text-transform:uppercase; text-align:center;">
+            <span asp-validation-for="CreateTaskViewModel.TaskName" class="text-danger mx-auto" style="width:100px; text-align:center; font-family=Oswald;"></span>
+        </div>
+    </div>
+</form>
+@*<form asp-action="SelectOnlyCategory">
+    <select name="CategoryId">
+        @foreach (var item in Model.Categories)
+        {
+            <option value="@item.CategoryId"><button type="submit">@item.CategoryName</button></option>
+        }
+    </select>
+</form>*@
+    <h2 class="mx-auto" style="width: 300px; font-family: Oswald; text-align: center;">Not Completed:</h2>
+    @foreach (
+     var item in Model.NotCompletedTasksViewModels)
+    {
+            <div class="d-flex flex-row mx-auto" style="width: 800px; border: 1px solid black; text-transform: uppercase; font-family: Oswald; ">
+                <div style="width:15%" class="p-3 text-center">
+                    @if (item.DueDate.HasValue)
+                    {
+                        @item.DueDate
+                    }
+                    else
+                    {
+                        <p>No Due Date</p>
+                    }
+                </div>
+                <div style="width:15%" class="p-3 text-center">
+                    @foreach (var category in Model.Categories)
+                    {
+                        if (item.CategoryId == category.CategoryId)
+                        {
+                            <p>@category.CategoryName</p>
+                        }
+                    }
+                </div>
+                <div style="width:55%" class="p-3 text-center">
+                    @item.TaskName
+                </div>
+                <div style="width:15%" class="p-3 text-center">
+                    <form asp-action="UpdateTask">
+                        <input type="text" name="Id" hidden value="@item.TaskId" />
+                        <input type="submit" value="Done" class="btn btn-danger" />
+                    </form>
+                </div>
+            </div>
+    }
+    <h2 class="mx-auto" style="width: 200px; font-family: Oswald; text-transform: uppercase; text-align: center;">Is Done:</h2>
+    @foreach (var item in Model.CompletedTasksViewModels)
+    {
+            <div class="d-flex flex-row mx-auto" style="width: 800px; text-transform: uppercase; font-family: Oswald; border:1px solid black;">
+                <div style="width: 15%; text-align: center; " class="p-3">
+                    @item.DoneDate
+                </div>
+                <div style="width:15%" class="p-3 text-center">
+                    @foreach (var category in Model.Categories)
+                    {
+                        if (item.CategoryId == category.CategoryId)
+                        {
+                            <p>@category.CategoryName</p>
+                        }
+                    }
+                </div>
+                <div style="width: 55%; text-align:center;" class="p-3">
+                    @item.TaskName
+                </div>
+                <div style="width: 15%; text-align:center;" class="p-3">
+                    <form asp-action="DeleteTask">
+                        <input type="text" hidden value="@item.TaskId" name="Id" />
+                        <input type="submit" class="btn btn-danger" value="Delete" />
+                    </form>
+                </div>
+            </div>
+    }

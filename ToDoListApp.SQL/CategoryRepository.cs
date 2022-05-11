@@ -35,5 +35,14 @@ namespace ToDoListApp.SQL
                 return db.Execute(sqlQuery, category);
             }
         }
+
+        public void DeleteCategory(int id)
+        {
+            using (IDbConnection db = new SqlConnection(ConnectionString))
+            {
+                var sqlQuery = "Delete from Categories Where CategoryId = @Id";
+                db.Execute(sqlQuery, new {Id = id});
+            }
+        }
     }
 }

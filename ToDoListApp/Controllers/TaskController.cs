@@ -19,14 +19,15 @@ using ToDoListApp.XML;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using Task = BusinessLogic.Models.Task;
+
 namespace ToDoListApp.Controllers
 {
-    public class HomeController : Controller
+    public class TaskController : Controller
     {
         private readonly ITaskRepository taskRepo;
         private readonly ICategoryRepository categoryRepo;
         private readonly IMapper mapper;
-        public HomeController(IEnumerable<ITaskRepository> taskRepositories, IEnumerable<ICategoryRepository> categoryRepositories, IMapper mapper)
+        public TaskController(IEnumerable<ITaskRepository> taskRepositories, IEnumerable<ICategoryRepository> categoryRepositories, IMapper mapper)
         {
             taskRepo = taskRepositories.Where(t => t.ProviderName == DataProvider.CurrentProvider).FirstOrDefault();
             categoryRepo = categoryRepositories.Where(t => t.ProviderName == DataProvider.CurrentProvider).FirstOrDefault();
@@ -80,7 +81,11 @@ namespace ToDoListApp.Controllers
         }
         public ActionResult CreateCategory()
         {
-            return View();
+            var categories = categoryRepo.GetCategories();
+            return View("CreateCategory", new CategoriesIndexViewModel()
+            {
+                Categories = categories
+            });
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -88,17 +93,11 @@ namespace ToDoListApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var completedTasks = taskRepo.GetCompletedTasks();
-                var notCompletedTasks = taskRepo.GetNotCompletedTasks();
                 var categories = categoryRepo.GetCategories();
-                return View("Index", new IndexViewModel()
+                return View("CreateCategory", new CategoriesIndexViewModel()
                 {
-                    Categories = mapper.
-                    Map<List<CategoriesViewModel>>(categories),
-                    CompletedTasksViewModels = mapper.
-                    Map<List<CompletedTasksViewModel>>(completedTasks),
-                    NotCompletedTasksViewModels = mapper.
-                    Map<List<NotCompletedTasksViewModel>>(notCompletedTasks)
+                    Categories = categories,
+                    CreateCategoryViewModel = createCategoryViewModel
                 });
             }
             Category category = mapper.Map<Category>(createCategoryViewModel);
@@ -106,18 +105,28 @@ namespace ToDoListApp.Controllers
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public ActionResult DeleteTask(int Id)
+        public ActionResult DeleteTask(int id)
         {
             if (ModelState.IsValid)
             {
-                 taskRepo.Delete(Id);
+                 taskRepo.Delete(id);
                 return RedirectToAction(nameof(Index));
             }
             return RedirectToAction(nameof(Index));
         }
-        public IActionResult ChangeDataProvider(string ProviderName)
+        [HttpPost]
+        public ActionResult DeleteCategory(int id)
         {
-            DataProvider.ChangeProvider(ProviderName);
+            if (ModelState.IsValid)
+            {
+                categoryRepo.DeleteCategory(id);
+                return RedirectToAction(nameof(CreateCategory));
+            }
+            return RedirectToAction(nameof(CreateCategory));
+        }
+        public IActionResult ChangeDataProvider(string providerName)
+        {
+            DataProvider.ChangeProvider(providerName);
             return RedirectToAction("Index");
         }
     }

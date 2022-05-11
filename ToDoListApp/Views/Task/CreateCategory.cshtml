@@ -1,0 +1,39 @@
+﻿@model ToDoListApp.ViewModels.CategoriesIndexViewModel;
+
+@{
+    Layout = null;
+}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Create Category</title>
+    <link href="@Url.Content("~/lib/bootstrap/dist/css/bootstrap.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <form asp-action="CreateCategory" class="d-flex flex-column mx-auto" style="width:300px; text-align:center; font-family:Oswald; text-transform:uppercase;">
+        <label asp-for="CreateCategoryViewModel.CategoryName">Name of Category</label>
+        <input type="text" asp-for="CreateCategoryViewModel.CategoryName" />
+        <input type="submit" class="btn btn-primary mt-5" value="send" />
+    </form>
+    <div class="mx-auto" style="width:100%; text-transform:uppercase; text-align:center;">
+        <span asp-validation-for="CreateCategoryViewModel.CategoryName" class="text-danger mx-auto" style="width:100px; text-align:center;"></span>
+    </div>
+    <h2 class="mx-auto" style="width: 300px; font-family: Oswald; text-align: center;">Categories:</h2>
+    @foreach (
+    var item in Model.Categories)
+    {
+        <div class="d-flex flex-row mx-auto" style="width: 800px; border: 1px solid black; text-transform: uppercase; font-family: Oswald; ">
+            <div style="width:70%" class="p-3 text-center">
+             <p>@item.CategoryName</p>
+            </div>
+            <div style="width:30%" class="p-3 text-center">
+                <form asp-action="DeleteCategory">
+                    <input type="text" name="Id" hidden value="@item.CategoryId" />
+                    <input type="submit" value="DeleteCategory" class="btn btn-danger" />
+                </form>
+            </div>
+        </div>
+    }
+</body>
+</html>

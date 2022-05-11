@@ -42,5 +42,20 @@ namespace ToDoListApp.XML
                 return data.Categories;
             }
         }
+
+        public void DeleteCategory(int id)
+        {
+            DataContainer? data;
+            using (FileStream fs = new FileStream(@"C:\Users\Phoenix\Desktop\Ism Company Course Projects\ToDoListApp\ToDoListApp.XML\Tasks.xml", FileMode.OpenOrCreate))
+            {
+                data = (DataContainer?)xmlSerializer.Deserialize(fs);
+                int index = data.Categories.FindIndex(category => category.CategoryId == id);
+                data.Categories.RemoveAt(index);
+            }
+            using (FileStream fs = new FileStream(@"C:\Users\Phoenix\Desktop\Ism Company Course Projects\ToDoListApp\ToDoListApp.XML\Tasks.xml", FileMode.Truncate))
+            {
+                xmlSerializer.Serialize(fs, data);
+            }
+        }
     }
 }

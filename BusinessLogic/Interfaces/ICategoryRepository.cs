@@ -11,5 +11,6 @@ namespace BusinessLogic.Interfaces
         string ProviderName { get; }
         List<Category> GetCategories();
         int CreateCategory(Category category);
+        void DeleteCategory(int id);
     }
 }
