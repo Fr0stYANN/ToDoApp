@@ -69,7 +69,6 @@ namespace ToDoListApp.Controllers
                 });
             }
             Task Task = mapper.Map<Task>(createTaskViewModel);
-            /*await*/
             taskRepo.Create(Task);
             return RedirectToAction(nameof(Index));
         }

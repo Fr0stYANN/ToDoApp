@@ -33,14 +33,6 @@
         </div>
     </div>
 </form>
-@*<form asp-action="SelectOnlyCategory">
-    <select name="CategoryId">
-        @foreach (var item in Model.Categories)
-        {
-            <option value="@item.CategoryId"><button type="submit">@item.CategoryName</button></option>
-        }
-    </select>
-</form>*@
     <h2 class="mx-auto" style="width: 300px; font-family: Oswald; text-align: center;">Not Completed:</h2>
     @foreach (
      var item in Model.NotCompletedTasksViewModels)
