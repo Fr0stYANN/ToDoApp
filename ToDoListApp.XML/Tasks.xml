@@ -2,26 +2,26 @@
 <DataContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Tasks>
     <Task>
-      <TaskId>3</TaskId>
+      <TaskId>5</TaskId>
       <TaskName>WASSSUPPPPPPPPPPP</TaskName>
       <IsDone>true</IsDone>
       <DueDate>2022-05-31T12:15:00</DueDate>
       <CategoryId>2</CategoryId>
-      <DoneDate>2022-05-11T13:06:26.1335758+03:00</DoneDate>
+      <DoneDate>2022-05-16T21:21:51.0432004+03:00</DoneDate>
     </Task>
     <Task>
       <TaskId>3</TaskId>
       <TaskName>WASSSUPPPPPPPPPPP</TaskName>
-      <IsDone>false</IsDone>
+      <IsDone>true</IsDone>
       <DueDate>2022-05-24T13:00:00</DueDate>
       <CategoryId>3</CategoryId>
-      <DoneDate xsi:nil="true" />
+      <DoneDate>2022-05-16T21:26:39.5775395+03:00</DoneDate>
     </Task>
     <Task>
-      <TaskId>4</TaskId>
-      <TaskName>WASSSUPPPPPPPPPPP</TaskName>
+      <TaskId>3</TaskId>
+      <TaskName>GraphQl2</TaskName>
       <IsDone>false</IsDone>
-      <DueDate xsi:nil="true" />
+      <DueDate>2022-06-15T00:00:00Z</DueDate>
       <CategoryId>3</CategoryId>
       <DoneDate xsi:nil="true" />
     </Task>
@@ -34,6 +34,14 @@
     <Category>
       <CategoryId>2</CategoryId>
       <CategoryName>Sport</CategoryName>
+    </Category>
+    <Category>
+      <CategoryId>3</CategoryId>
+      <CategoryName>GraphQlCategory</CategoryName>
+    </Category>
+    <Category>
+      <CategoryId>4</CategoryId>
+      <CategoryName>graphqlcategory</CategoryName>
     </Category>
   </Categories>
 </DataContainer>

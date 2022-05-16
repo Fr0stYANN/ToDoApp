@@ -46,7 +46,7 @@ namespace ToDoListApp
             services.AddScoped<ITaskRepository, XmlTaskRepository>();
             services.AddScoped<TasksSchema>();
             services.AddGraphQL().AddSystemTextJson()
-                .AddGraphTypes(typeof(TasksSchema), ServiceLifetime.Scoped);
+                .AddGraphTypes(typeof(TasksSchema),ServiceLifetime.Scoped);
 
               
             services.AddDatabaseDeveloperPageExceptionFilter();
