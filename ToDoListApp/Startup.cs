@@ -13,9 +13,15 @@ using BusinessLogic.Models;
 using BusinessLogic.Interfaces;
 using ToDoListApp.SQL;
 using ToDoListApp.XML;
+using GraphQL.Server;
+using GraphQL;
+using GraphQL.Server.Transports.AspNetCore;
 using AutoMapper;
+using GraphQL.SystemTextJson;
 using ToDoListApp.ViewModels;
+using GraphQL.Server.Transports.AspNetCore.SystemTextJson;
 using Task = BusinessLogic.Models.Task;
+using ToDoListApp.GraphQlApi.Schema;
 namespace ToDoListApp
 {
     public class Startup
@@ -32,13 +38,17 @@ namespace ToDoListApp
         {
             //var config = new MapperConfiguration(cfg => cfg.CreateMap<List<Task>, List<CompletedTasksViewModel>>());
             //var mapper = config.CreateMapper();
-
-            services.AddTransient<ITaskRepository, TaskRepository>();
-            services.AddTransient<ICategoryRepository, CategoryRepository>();
-            services.AddTransient<ICategoryRepository, XmlCategoryRepository>();
-            services.AddTransient<ITaskRepository, XmlTaskRepository>();
+            services.AddMvc();
+            //services.AddScoped<ITaskRepository, TaskRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfile));
-            services.AddControllersWithViews();
+            //services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ICategoryRepository, XmlCategoryRepository>();
+            services.AddScoped<ITaskRepository, XmlTaskRepository>();
+            services.AddScoped<TasksSchema>();
+            services.AddGraphQL().AddSystemTextJson()
+                .AddGraphTypes(typeof(TasksSchema), ServiceLifetime.Scoped);
+
+              
             services.AddDatabaseDeveloperPageExceptionFilter();
         }
 
@@ -49,24 +59,33 @@ namespace ToDoListApp
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+            //else
+            //{
+            //    app.UseExceptionHandler("/Home/Error");
+            //    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+            //    app.UseHsts();
+            //}
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
             app.UseRouting();
+            app.UseGraphQL<TasksSchema>();
+            app.UseGraphQLPlayground(options: new GraphQL.Server.Ui.Playground.GraphQLPlaygroundOptions());
+            app.
+                UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllers();
+                });
+            //app.UseHttpsRedirection();
+            //app.UseStaticFiles();
+            //app.UseRouting();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Task}/{action=Index}/{id?}");
-            });
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllerRoute(
+            //        name: "default",
+            //        pattern: "{controller=Task}/{action=Index}/{id?}");
+            //});
         }
     }
 }

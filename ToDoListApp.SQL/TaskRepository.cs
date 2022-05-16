@@ -48,14 +48,14 @@ namespace ToDoListApp.SQL
             }
             return 0;
         }
-        //public async Task<BusinessLogic.Models.Task> GetTaskById(int id)
-        //{
-        //    var sqlQuery = "SELECT * FROM Tasks where TaskId = @Id";
-        //    using (IDbConnection db = new SqlConnection(ConnectionString))
-        //    {
-        //        return (await db.QueryFirstOrDefaultAsync<BusinessLogic.Models.Task>(sqlQuery, new { Id = id }));
-        //    }
-        //}
+        public BusinessLogic.Models.Task GetTaskById(int id)
+        {
+            var sqlQuery = "SELECT * FROM Tasks where TaskId = @Id";
+            using (IDbConnection db = new SqlConnection(ConnectionString))
+            {
+                return (db.QueryFirstOrDefault<BusinessLogic.Models.Task>(sqlQuery, new { Id = id }));
+            }
+        }
         public int Delete(int id)
         {
             var sqlQuery = "Delete from Tasks where TaskId = @Id";

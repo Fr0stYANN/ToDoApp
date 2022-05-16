@@ -73,6 +73,16 @@ namespace ToDoListApp.XML
                 return result.ToList();
             }
         }
+        public Task GetTaskById(int id)
+        {
+            DataContainer? data;
+            using (FileStream fs = new FileStream((@"C:\Users\Phoenix\Desktop\Ism Company Course Projects\ToDoListApp\ToDoListApp.XML\Tasks.xml"), FileMode.OpenOrCreate))
+            {
+                data = (DataContainer?)xmlSerializer.Deserialize(fs);
+                var task = data.Tasks.SingleOrDefault(task => task.TaskId == id);
+                return task;
+            }
+        }
         public int Update(int TaskId, DateTime DoneDate)
         {
             DataContainer? data;
