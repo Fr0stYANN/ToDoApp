@@ -8,7 +8,7 @@ using BusinessLogic.Models;
 using BusinessLogic.Interfaces;
 using GraphQL;
 
-namespace ToDoListApp.GraphQlApi.Schema
+namespace ToDoListApp.GraphQL
 {
     public class TasksQuery : ObjectGraphType
     {

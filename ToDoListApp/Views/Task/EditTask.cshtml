@@ -1,0 +1,17 @@
+﻿@model ToDoListApp.ViewModels.EditTaskViewModel;
+
+    <form asp-action="EditTask">
+        <label asp-for="@Model.Task.TaskName"></label>
+        <input type="text" hidden asp-for="@Model.Task.TaskId" />
+        <input type="datetime-local" hidden asp-for="@Model.Task.DoneDate" />
+        <input type="text" asp-for="@Model.Task.IsDone" hidden/>
+        <input type="text" value="@Model.Task.TaskName" asp-for="@Model.Task.TaskName" />
+        <select asp-for="@Model.Task.CategoryId">
+            @foreach (var category in Model.Categories)
+            {
+                <option value="@category.CategoryId">@category.CategoryName</option>
+            }
+        </select>
+        <input type="datetime-local" value="@Model.Task.DueDate" />
+        <input type="submit" value="Edit" />
+    </form>

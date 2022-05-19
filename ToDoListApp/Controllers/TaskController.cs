@@ -128,5 +128,21 @@ namespace ToDoListApp.Controllers
             DataProvider.ChangeProvider(providerName);
             return RedirectToAction("Index");
         }
+        public ActionResult EditTaskk(int taskId)
+        {
+            var task = taskRepo.GetTaskById(taskId);
+            var categories = categoryRepo.GetCategories();
+            return View("EditTask", new EditTaskViewModel() { 
+             Task = task,
+             Categories = categories
+            });
+        }
+        [HttpPost]
+        public ActionResult EditTask(Task Task)
+        {
+            var taskId = Task.TaskId;
+            taskRepo.EditTask(taskId, Task);
+            return RedirectToAction("Index");
+        }
     }
 }

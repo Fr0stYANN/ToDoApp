@@ -14,5 +14,6 @@ namespace BusinessLogic.Interfaces
         BusinessLogic.Models.Task GetTaskById(int id);
         int Update(int TaskId, DateTime DoneDate);
         int Delete(int id);
+        int EditTask(int TaskId, BusinessLogic.Models.Task task);
     }
 }

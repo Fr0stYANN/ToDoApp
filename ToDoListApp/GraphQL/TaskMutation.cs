@@ -6,7 +6,7 @@ using GraphQL;
 using Task = BusinessLogic.Models.Task;
 using GraphQL.Types;
 using BusinessLogic.Interfaces;
-namespace ToDoListApp.GraphQlApi.Schema
+namespace ToDoListApp.GraphQL
 {
     public class TaskMutation : ObjectGraphType
     {

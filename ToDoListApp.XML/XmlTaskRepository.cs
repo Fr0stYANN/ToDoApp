@@ -99,5 +99,20 @@ namespace ToDoListApp.XML
             }
             return 0;
         }
+        public int EditTask(int taskId, Task task)
+        {
+            DataContainer? data;
+            using (FileStream fs = new FileStream((@"C:\Users\Phoenix\Desktop\Ism Company Course Projects\ToDoListApp\ToDoListApp.XML\Tasks.xml"), FileMode.OpenOrCreate))
+            {
+                data = (DataContainer?)xmlSerializer.Deserialize(fs);
+                int index = data.Tasks.FindIndex(task => task.TaskId == taskId);
+                data.Tasks[index] = task;
+            }
+            using (FileStream fs = new FileStream(@"C:\Users\Phoenix\Desktop\Ism Company Course Projects\ToDoListApp\ToDoListApp.XML\Tasks.xml", FileMode.Truncate))
+            {
+                xmlSerializer.Serialize(fs, data);
+            }
+            return 0;
+        }
     }
 }

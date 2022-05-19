@@ -6,7 +6,7 @@ using GraphQL.Types;
 using GraphQL;
 using BusinessLogic.Models;
 using BusinessLogic.Interfaces;
-namespace ToDoListApp.GraphQlApi.Schema
+namespace ToDoListApp.GraphQL
 {
     public class CategoryMutation : ObjectGraphType
     {

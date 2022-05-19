@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using GraphQL.Utilities;
 using GraphQL;
 using GraphQL.Types;
-namespace ToDoListApp.GraphQlApi.Schema
+namespace ToDoListApp.GraphQL
 {
-    public class CategoriesSchema : GraphQL.Types.Schema
+    public class CategoriesSchema : Schema
     {
         public CategoriesSchema(IServiceProvider provider) : base(provider)
         {

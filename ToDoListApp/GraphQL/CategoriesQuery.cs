@@ -7,7 +7,7 @@ using GraphQL.Utilities;
 using GraphQL.Types;
 using BusinessLogic.Models;
 using BusinessLogic.Interfaces;
-namespace ToDoListApp.GraphQlApi.Schema
+namespace ToDoListApp.GraphQL
 {
     public class CategoriesQuery : ObjectGraphType
     {

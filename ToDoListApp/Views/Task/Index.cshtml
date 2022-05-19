@@ -2,8 +2,8 @@
 @{
     Layout = null;
 }
-<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-<link rel="stylesheet" href="~/css/site.css" />
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true"/>
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
 <form asp-action="ChangeDataProvider">
     <select name="ProviderName">
         <option value="SQL">Sql</option>
@@ -37,36 +37,42 @@
     @foreach (
      var item in Model.NotCompletedTasksViewModels)
     {
-            <div class="d-flex flex-row mx-auto" style="width: 800px; border: 1px solid black; text-transform: uppercase; font-family: Oswald; ">
-                <div style="width:15%" class="p-3 text-center">
-                    @if (item.DueDate.HasValue)
-                    {
-                        @item.DueDate
-                    }
-                    else
-                    {
-                        <p>No Due Date</p>
-                    }
-                </div>
-                <div style="width:15%" class="p-3 text-center">
-                    @foreach (var category in Model.Categories)
-                    {
-                        if (item.CategoryId == category.CategoryId)
-                        {
-                            <p>@category.CategoryName</p>
-                        }
-                    }
-                </div>
-                <div style="width:55%" class="p-3 text-center">
-                    @item.TaskName
-                </div>
-                <div style="width:15%" class="p-3 text-center">
-                    <form asp-action="UpdateTask">
-                        <input type="text" name="Id" hidden value="@item.TaskId" />
-                        <input type="submit" value="Done" class="btn btn-danger" />
-                    </form>
-                </div>
-            </div>
+<div class="d-flex flex-row mx-auto" style="width: 800px; border: 1px solid black; text-transform: uppercase; font-family: Oswald; ">
+    <div style="width:15%" class="p-3 text-center">
+        @if (item.DueDate.HasValue)
+        {
+            @item.DueDate
+        }
+        else
+        {
+            <p>No Due Date</p>
+        }
+    </div>
+    <div style="width:15%" class="p-3 text-center">
+        @foreach (var category in Model.Categories)
+        {
+            if (item.CategoryId == category.CategoryId)
+            {
+                <p>@category.CategoryName</p>
+            }
+        }
+    </div>
+    <div style="width:40%" class="p-3 text-center">
+        @item.TaskName
+    </div>
+    <div style="width:15%" class="p-3 text-center">
+        <form asp-action="UpdateTask">
+            <input type="text" name="Id" hidden value="@item.TaskId" />
+            <input type="submit" value="Done" class="btn btn-danger" />
+        </form>
+    </div>
+    <div style="width:15%" class="p-3 text-center">
+        <form asp-action="EditTaskk">
+            <input type="text" name="taskId" hidden value="@item.TaskId" />
+            <input type="submit" value="Edit" class="btn btn-primary" />
+        </form>
+    </div>
+</div>
     }
     <h2 class="mx-auto" style="width: 200px; font-family: Oswald; text-transform: uppercase; text-align: center;">Is Done:</h2>
     @foreach (var item in Model.CompletedTasksViewModels)

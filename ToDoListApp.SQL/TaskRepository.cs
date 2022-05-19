@@ -65,32 +65,14 @@ namespace ToDoListApp.SQL
             }
             return 0;
         }
-        //public async Task<List<BusinessLogic.Models.Task>> OrderByDueDate()
-        //{
-        //    var sqlQuery = "SELECT * FROM Tasks Order BY DueDate DESC";
-        //    using (IDbConnection db = new SqlConnection(ConnectionString))
-        //    {
-        //        var result = await db.QueryAsync<BusinessLogic.Models.Task>(sqlQuery);
-        //        return result.ToList();
-        //    }
-        //}
-        //public async Task<List<BusinessLogic.Models.Task>> GetCompletedByCategory(int CategoryId)
-        //{
-        //    var sqlQuery = "SELECT * FROM Tasks WHERE CategoryId = @CategoryId AND IsDone = 1 Order By DoneDate desc";
-        //    using (IDbConnection db = new SqlConnection(ConnectionString))
-        //    {
-        //        var result = await db.QueryAsync<BusinessLogic.Models.Task>(sqlQuery, new { CategoryId = CategoryId });
-        //        return result.ToList();
-        //    }
-        //}
-        //public async Task<List<BusinessLogic.Models.Task>> GetNotCompletedByCategory(int CategoryId)
-        //{
-        //    var sqlQuery = "SELECT * FROM Tasks WHERE CategoryId = @CategoryId AND IsDone = 0 Order By CASE WHEN DueDate IS NULL THEN 1 ELSE 0 END ASC, DueDate ASC";
-        //    using (IDbConnection db = new SqlConnection(ConnectionString))
-        //    {
-        //        var result = await db.QueryAsync<BusinessLogic.Models.Task>(sqlQuery, new { CategoryId = CategoryId });
-        //        return result.ToList();
-        //    }
-        //}
+        public int EditTask(int taskId, BusinessLogic.Models.Task task)
+        {
+            Delete(taskId);
+            var sqlQuery = "INSERT INTO Tasks(TaskId, TaskName, IsDone, DueDate, CategoryId) VALUES(@TaskId,@TaskName, @IsDone, @DueDate, @CategoryId)";
+            using (IDbConnection db = new SqlConnection(ConnectionString))
+            {
+                return db.Execute(sqlQuery, task);
+            }
+        }
     }
 }

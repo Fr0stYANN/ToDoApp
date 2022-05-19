@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using GraphQL.Types;
 using BusinessLogic.Models;
 using Task = BusinessLogic.Models.Task;
-namespace ToDoListApp.GraphQlApi.Schema
+namespace ToDoListApp.GraphQL
 {
     public class TaskType : ObjectGraphType<Task>
     {
