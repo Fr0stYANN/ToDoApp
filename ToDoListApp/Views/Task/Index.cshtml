@@ -1,6 +1,5 @@
 ﻿@model ToDoListApp.ViewModels.IndexViewModel;
 @{
-    Layout = null;
 }
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true"/>
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
@@ -67,7 +66,7 @@
         </form>
     </div>
     <div style="width:15%" class="p-3 text-center">
-        <form asp-action="EditTaskk">
+        <form asp-action="EditTask" method="get">
             <input type="text" name="taskId" hidden value="@item.TaskId" />
             <input type="submit" value="Edit" class="btn btn-primary" />
         </form>

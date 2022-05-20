@@ -12,6 +12,6 @@
                 <option value="@category.CategoryId">@category.CategoryName</option>
             }
         </select>
-        <input type="datetime-local" value="@Model.Task.DueDate" />
+        <input type="datetime-local" value="@Model.Task.DueDate" asp-for="@Model.Task.DueDate"/>
         <input type="submit" value="Edit" />
     </form>
