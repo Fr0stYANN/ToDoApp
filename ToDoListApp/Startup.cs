@@ -37,14 +37,14 @@ namespace ToDoListApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            //services.AddScoped<ITaskRepository, TaskRepository>();
-            //services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ITaskRepository, TaskRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfile));
             services.AddScoped<ICategoryRepository, XmlCategoryRepository>();
             services.AddScoped<ITaskRepository, XmlTaskRepository>();
-            services.AddScoped<TasksSchema>();
+            services.AddScoped<ToDoAppSchema>();
             services.AddGraphQL().AddSystemTextJson()
-                .AddGraphTypes(typeof(TasksSchema),ServiceLifetime.Scoped);
+                .AddGraphTypes(typeof(ToDoAppSchema),ServiceLifetime.Scoped);
             services.AddDatabaseDeveloperPageExceptionFilter();
         }
 
@@ -64,7 +64,7 @@ namespace ToDoListApp
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseGraphQL<TasksSchema>();
+            app.UseGraphQL<ToDoAppSchema>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

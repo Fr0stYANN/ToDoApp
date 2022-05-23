@@ -10,8 +10,10 @@ namespace ToDoListApp.GraphQL
 {
     public class TaskMutation : ObjectGraphType
     {
-        public TaskMutation(ITaskRepository taskRepository)
+        private readonly ITaskRepository taskRepository;
+        public TaskMutation(IEnumerable<ITaskRepository> taskRepositories)
         {
+            taskRepository = taskRepositories.Where(t => t.ProviderName == DataProvider.CurrentProvider).FirstOrDefault();
             Field<TaskType>(
                 "createTask",
                 arguments: new QueryArguments(new QueryArgument<NonNullGraphType<TaskInputType>> { Name = "task" }),
@@ -40,6 +42,18 @@ namespace ToDoListApp.GraphQL
                     var task = taskRepository.GetTaskById(taskId);
                     taskRepository.Delete(taskId);
                     return $"task with {taskId} has been deleted";
+                }
+                );
+            Field<StringGraphType>(
+                "changeDataProvider",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "providerName" }),
+                resolve: context =>
+                {
+                    var providerName = context.GetArgument<string>("providerName");
+                    var currentProvider = DataProvider.CurrentProvider;
+                    DataProvider.ChangeProvider(providerName);
+                    TaskMutation taskMutation = new TaskMutation(taskRepositories);
+                    return $"current data provider has been changed from {currentProvider} to {providerName}";
                 }
                 );
         }

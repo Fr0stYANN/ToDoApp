@@ -7,9 +7,9 @@ using GraphQL;
 using GraphQL.Utilities;
 namespace ToDoListApp.GraphQL
 {
-    public class TasksSchema : Schema
+    public class ToDoAppSchema : Schema
     {
-        public TasksSchema(IServiceProvider provider) : base(provider)
+        public ToDoAppSchema(IServiceProvider provider) : base(provider)
         {
             Query = provider.GetRequiredService<RootQueries>();
             Mutation = provider.GetRequiredService<RootMutations>();

@@ -19,6 +19,7 @@ using ToDoListApp.XML;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using Task = BusinessLogic.Models.Task;
+using ToDoListApp.VieModels;
 
 namespace ToDoListApp.Controllers
 {
@@ -144,6 +145,22 @@ namespace ToDoListApp.Controllers
             var taskId = Task.TaskId;
             taskRepo.EditTask(taskId, Task);
             return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public ActionResult EditCategory(int categoryId)
+        {
+            var category = categoryRepo.GetCategoryById(categoryId);
+            return View("EditCategory", new EditCategoryViewModel()
+            {
+                Category = category
+            });
+        }
+        [HttpPost]
+        public ActionResult EditCategory(Category category)
+        {
+            var categoryId = category.CategoryId;
+            categoryRepo.EditCategory(categoryId, category);
+            return RedirectToAction("CreateCategory");
         }
     }
 }

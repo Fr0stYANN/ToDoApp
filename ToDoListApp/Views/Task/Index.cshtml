@@ -5,8 +5,18 @@
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
 <form asp-action="ChangeDataProvider">
     <select name="ProviderName">
-        <option value="SQL">Sql</option>
-        <option selected value="Xml">Xml</option>
+        @{
+            if (DataProvider.CurrentProvider == "XML")
+            {
+                <option value="SQL">Sql</option>
+                <option selected value="XML">Xml</option>
+            }
+            else
+            {
+                <option selected value="SQL">Sql</option>
+                <option  value="XML">Xml</option>
+            }
+        }
     </select>
     <input type="submit" value="send"/>
 </form>
@@ -17,6 +27,7 @@
             <input type="text" asp-for="CreateTaskViewModel.TaskName" class="form-control form-control-sm" style="width:100%; height:50px;" />
             <input type="datetime-local" asp-for="CreateTaskViewModel.DueDate" class="form-control form-control-sm" style="width:50%;" />
             <select asp-for="CreateTaskViewModel.CategoryId" style="width:50%;">
+                <option value="@null">NO CATEGORY</option>
                 @foreach(var category in Model.Categories)
             {
                 <option value="@category.CategoryId">@category.CategoryName</option>
@@ -46,15 +57,24 @@
         {
             <p>No Due Date</p>
         }
+
+
     </div>
     <div style="width:15%" class="p-3 text-center">
-        @foreach (var category in Model.Categories)
-        {
-            if (item.CategoryId == category.CategoryId)
+        @if(item.CategoryId.HasValue)
             {
-                <p>@category.CategoryName</p>
+                @foreach(var category in Model.Categories)
+                        {
+                            if(category.CategoryId == item.CategoryId)
+                            {
+                                  <p>@category.CategoryName</p>
+                            }
+                        }
             }
-        }
+                else
+                {
+                    <p>No Category</p>
+                }
     </div>
     <div style="width:40%" class="p-3 text-center">
         @item.TaskName
@@ -81,12 +101,19 @@
                     @item.DoneDate
                 </div>
                 <div style="width:15%" class="p-3 text-center">
-                    @foreach (var category in Model.Categories)
+                    @if (item.CategoryId.HasValue)
                     {
-                        if (item.CategoryId == category.CategoryId)
+                        @foreach (var category in Model.Categories)
                         {
-                            <p>@category.CategoryName</p>
+                            if (category.CategoryId == item.CategoryId)
+                            {
+                                <p>@category.CategoryName</p>
+                            }
                         }
+                    }
+                    else
+                    {
+                        <p>No Category</p>
                     }
                 </div>
                 <div style="width: 55%; text-align:center;" class="p-3">

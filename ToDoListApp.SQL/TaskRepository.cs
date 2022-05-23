@@ -67,8 +67,7 @@ namespace ToDoListApp.SQL
         }
         public int EditTask(int taskId, BusinessLogic.Models.Task task)
         {
-            Delete(taskId);
-            var sqlQuery = "INSERT INTO Tasks(TaskId, TaskName, IsDone, DueDate, CategoryId) VALUES(@TaskId,@TaskName, @IsDone, @DueDate, @CategoryId)";
+            var sqlQuery = "UPDATE Tasks SET TaskName = @TaskName, IsDone = @IsDone, DueDate = @DueDate, CategoryId = @CategoryId Where TaskId = @TaskId";
             using (IDbConnection db = new SqlConnection(ConnectionString))
             {
                 return db.Execute(sqlQuery, task);

@@ -38,10 +38,33 @@ namespace ToDoListApp.SQL
 
         public void DeleteCategory(int id)
         {
+            //using (IDbConnection db = new SqlConnection(ConnectionString))
+            //{
+            //    var sqlQuery = "Update Tasks set CategoryId = 0 Where CategoryId = @CategoryId";
+            //    db.Execute(sqlQuery, new { CategoryId = id });
+            //}
             using (IDbConnection db = new SqlConnection(ConnectionString))
             {
-                var sqlQuery = "Delete from Categories Where CategoryId = @Id";
-                db.Execute(sqlQuery, new {Id = id});
+                var sqlQuery = "Delete from Categories Where CategoryID = @id";
+                db.Execute(sqlQuery, new { id = id });
+            }
+        }
+
+        public Category GetCategoryById(int id)
+        {
+            using (IDbConnection db = new SqlConnection(ConnectionString))
+            {
+                var sqlQuery = "Select * from Categories where CategoryId = @CategoryId";
+                return db.QueryFirstOrDefault<Category>(sqlQuery, new { CategoryId = id });
+            }
+        }
+
+        public int EditCategory(int categoryId, Category category)
+        {
+            using (IDbConnection db = new SqlConnection(ConnectionString))
+            {
+                var sqlQuery = "Update Categories SET CategoryName = @CategoryName Where CategoryId = @CategoryId";
+                return db.Execute(sqlQuery, new { CategoryId = categoryId, CategoryName = category.CategoryName });
             }
         }
     }

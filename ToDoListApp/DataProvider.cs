@@ -7,7 +7,7 @@ namespace ToDoListApp
 {
     public static class DataProvider
     {
-        public static string CurrentProvider = "Xml";
+        public static string CurrentProvider = "XML";
         public static void ChangeProvider(string provider)
         {
             CurrentProvider = provider;

@@ -12,5 +12,8 @@ namespace BusinessLogic.Interfaces
         List<Category> GetCategories();
         int CreateCategory(Category category);
         void DeleteCategory(int id);
+
+        Category GetCategoryById(int id);
+        public int EditCategory(int categoryId, Category category);
     }
 }

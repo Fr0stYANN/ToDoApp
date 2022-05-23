@@ -10,8 +10,10 @@ namespace ToDoListApp.GraphQL
 {
     public class CategoryMutation : ObjectGraphType
     {
-        public CategoryMutation(ICategoryRepository categoryRepository)
+        private readonly ICategoryRepository categoryRepository;
+        public CategoryMutation(IEnumerable<ICategoryRepository> categoryRepositories)
         {
+            categoryRepository = categoryRepositories.Where(c => c.ProviderName == DataProvider.CurrentProvider).FirstOrDefault();
             Field<CategoryType>(
                 "createCategory",
                 arguments: new QueryArguments(new QueryArgument<NonNullGraphType<CategoryInputType>> { Name = "category" }),

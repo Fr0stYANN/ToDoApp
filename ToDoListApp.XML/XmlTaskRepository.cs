@@ -12,7 +12,7 @@ namespace ToDoListApp.XML
 {
     public class XmlTaskRepository : ITaskRepository
     {
-        public string ProviderName => "Xml";
+        public string ProviderName => "XML";
         XmlSerializer xmlSerializer = new XmlSerializer(typeof(DataContainer));
         public Task<int> Create(Task task)
         {
