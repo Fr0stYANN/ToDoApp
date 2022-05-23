@@ -1,5 +1,5 @@
 ﻿@model ToDoListApp.VieModels.EditCategoryViewModel
-<form asp-action="EditCategory" method="post">
+<form asp-action="EditCategory" asp-controller="Category" method="post">
     <label asp-for="@Model.Category.CategoryName"></label>
     <input type="text" asp-for="@Model.Category.CategoryId" hidden value="@Model.Category.CategoryId"/>
     <input type="text" asp-for="@Model.Category.CategoryName" value="@Model.Category.CategoryName" />

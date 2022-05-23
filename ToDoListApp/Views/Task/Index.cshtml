@@ -36,7 +36,7 @@
         </div>
         <div class="d-flex flex-row">
             <input type="submit" value="Add" class="btn btn-primary" style="width:50%;" />
-            <a class="btn btn-primary" asp-action="CreateCategory" style="width:50%;">Create Category</a>
+            <a class="btn btn-primary" asp-action="CreateCategory" asp-controller="Category" style="width:50%;">Create Category</a>
         </div>
         <div class="mx-auto" style="width:100%; text-transform:uppercase; text-align:center;">
             <span asp-validation-for="CreateTaskViewModel.TaskName" class="text-danger mx-auto" style="width:100px; text-align:center; font-family=Oswald;"></span>

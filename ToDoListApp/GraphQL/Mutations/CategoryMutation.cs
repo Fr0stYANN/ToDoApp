@@ -20,7 +20,8 @@ namespace ToDoListApp.GraphQL
                 resolve: context =>
                 {
                     var category = context.GetArgument<Category>("category");
-                    return categoryRepository.CreateCategory(category);
+                    categoryRepository.CreateCategory(category);
+                    return category;
                 }
                 );
             Field<StringGraphType>(
@@ -29,6 +30,7 @@ namespace ToDoListApp.GraphQL
                 resolve: context =>
                 {
                     var categoryId = context.GetArgument<int>("categoryId");
+                    categoryRepository.DeleteCategory(categoryId);
                     return $"Category with {categoryId} has been deleted";
                 }
                 );

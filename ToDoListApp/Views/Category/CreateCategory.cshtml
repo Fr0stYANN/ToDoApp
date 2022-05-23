@@ -10,7 +10,7 @@
     <link href="@Url.Content("~/lib/bootstrap/dist/css/bootstrap.css")" rel="stylesheet" type="text/css" asp-append-version="true"/>
 </head>
 <body>
-    <form asp-action="CreateCategory" class="d-flex flex-column mx-auto" style="width:300px; text-align:center; font-family:Oswald; text-transform:uppercase;">
+    <form asp-action="CreateCategory" asp-controller="Category" method ="post"class="d-flex flex-column mx-auto" style="width:300px; text-align:center; font-family:Oswald; text-transform:uppercase;">
         <label asp-for="CreateCategoryViewModel.CategoryName">Name of Category</label>
         <input type="text" asp-for="CreateCategoryViewModel.CategoryName" />
         <input type="submit" class="btn btn-primary mt-5" value="send" />
@@ -27,13 +27,13 @@
         <p>@item.CategoryName</p>
     </div>
     <div style="width:30%" class="p-3 text-center">
-        <form asp-action="DeleteCategory">
+        <form asp-action="DeleteCategory" asp-controller="Category">
             <input type="text" name="Id" hidden value="@item.CategoryId" />
             <input type="submit" value="DeleteCategory" class="btn btn-danger" />
         </form>
     </div>
     <div style="width:15%" class="p-3 text-center">
-        <form asp-action="EditCategory" method="get">
+        <form asp-action="EditCategory" asp-controller="Category" method="get">
             <input type="text" name="categoryId" value="@item.CategoryId" hidden/>
             <input type="submit" value="Edit" class="btn btn-primary"/>
         </form>

@@ -41,6 +41,10 @@ namespace ToDoListApp.XML
                 data = (DataContainer?)xmlSerializer.Deserialize(fs);
                 int index = data.Tasks.FindIndex(task => task.TaskId == id);
                 data.Tasks.RemoveAt(index);
+                for(int i = 0; i < data.Tasks.Count;i++)
+                {
+                    data.Tasks[i].TaskId = i;
+                }
             }
             using (FileStream fs = new FileStream(@"C:\Users\Phoenix\Desktop\Ism Company Course Projects\ToDoListApp\ToDoListApp.XML\Tasks.xml", FileMode.Truncate))
             {

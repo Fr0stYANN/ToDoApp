@@ -79,31 +79,6 @@ namespace ToDoListApp.Controllers
             taskRepo.Update(Id, DateTime.Now);
             return RedirectToAction(nameof(Index));
         }
-        public ActionResult CreateCategory()
-        {
-            var categories = categoryRepo.GetCategories();
-            return View("CreateCategory", new CategoriesIndexViewModel()
-            {
-                Categories = categories
-            });
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateCategory(CreateCategoryViewModel createCategoryViewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                var categories = categoryRepo.GetCategories();
-                return View("CreateCategory", new CategoriesIndexViewModel()
-                {
-                    Categories = categories,
-                    CreateCategoryViewModel = createCategoryViewModel
-                });
-            }
-            Category category = mapper.Map<Category>(createCategoryViewModel);
-            categoryRepo.CreateCategory(category);
-            return RedirectToAction("Index");
-        }
         [HttpPost]
         public ActionResult DeleteTask(int id)
         {
@@ -113,16 +88,6 @@ namespace ToDoListApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return RedirectToAction(nameof(Index));
-        }
-        [HttpPost]
-        public ActionResult DeleteCategory(int id)
-        {
-            if (ModelState.IsValid)
-            {
-                categoryRepo.DeleteCategory(id);
-                return RedirectToAction(nameof(CreateCategory));
-            }
-            return RedirectToAction(nameof(CreateCategory));
         }
         public IActionResult ChangeDataProvider(string providerName)
         {
@@ -145,22 +110,6 @@ namespace ToDoListApp.Controllers
             var taskId = Task.TaskId;
             taskRepo.EditTask(taskId, Task);
             return RedirectToAction("Index");
-        }
-        [HttpGet]
-        public ActionResult EditCategory(int categoryId)
-        {
-            var category = categoryRepo.GetCategoryById(categoryId);
-            return View("EditCategory", new EditCategoryViewModel()
-            {
-                Category = category
-            });
-        }
-        [HttpPost]
-        public ActionResult EditCategory(Category category)
-        {
-            var categoryId = category.CategoryId;
-            categoryRepo.EditCategory(categoryId, category);
-            return RedirectToAction("CreateCategory");
         }
     }
 }
