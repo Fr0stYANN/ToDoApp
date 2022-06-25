@@ -3,41 +3,41 @@
   <Tasks>
     <Task>
       <TaskId>0</TaskId>
-      <TaskName>GraphQLLL</TaskName>
+      <TaskName>dsadasdasd</TaskName>
       <IsDone>true</IsDone>
-      <DueDate>2022-05-18T00:00:00Z</DueDate>
-      <CategoryId>2</CategoryId>
-      <DoneDate>2022-05-17T11:12:45.7596398+03:00</DoneDate>
+      <DueDate>2022-06-23T12:54:00Z</DueDate>
+      <CategoryId>1</CategoryId>
+      <DoneDate>2022-06-19T17:54:17.3803808+03:00</DoneDate>
     </Task>
     <Task>
       <TaskId>1</TaskId>
-      <TaskName>Go Jogging</TaskName>
+      <TaskName>adasdsadsadasd</TaskName>
       <IsDone>true</IsDone>
-      <DueDate>2022-05-26T20:25:00</DueDate>
-      <CategoryId>0</CategoryId>
-      <DoneDate>2022-05-23T21:34:34.4655481+03:00</DoneDate>
+      <DueDate>2022-06-22T17:45:00Z</DueDate>
+      <CategoryId>1</CategoryId>
+      <DoneDate>2022-06-19T17:53:18.4763582+03:00</DoneDate>
     </Task>
     <Task>
       <TaskId>2</TaskId>
-      <TaskName>tutyutyutysgfg</TaskName>
+      <TaskName>екпаfssssss</TaskName>
       <IsDone>false</IsDone>
-      <DueDate>2022-05-25T21:34:00</DueDate>
-      <CategoryId>1</CategoryId>
+      <DueDate>2022-06-21T13:58:00Z</DueDate>
+      <CategoryId>3</CategoryId>
       <DoneDate xsi:nil="true" />
     </Task>
   </Tasks>
   <Categories>
     <Category>
       <CategoryId>0</CategoryId>
-      <CategoryName>FIREEEE</CategoryName>
+      <CategoryName>edited</CategoryName>
     </Category>
     <Category>
       <CategoryId>1</CategoryId>
-      <CategoryName>asdasd</CategoryName>
+      <CategoryName>editedddd</CategoryName>
     </Category>
     <Category>
       <CategoryId>3</CategoryId>
-      <CategoryName>GraphQLHIIOO</CategoryName>
+      <CategoryName>sadasdassdsdddddd</CategoryName>
     </Category>
   </Categories>
 </DataContainer>

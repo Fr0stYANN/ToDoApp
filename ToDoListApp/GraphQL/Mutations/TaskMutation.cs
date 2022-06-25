@@ -6,6 +6,8 @@ using GraphQL;
 using Task = BusinessLogic.Models.Task;
 using GraphQL.Types;
 using BusinessLogic.Interfaces;
+using ToDoListApp.GraphQL.InputTypes;
+
 namespace ToDoListApp.GraphQL
 {
     public class TaskMutation : ObjectGraphType
@@ -20,7 +22,19 @@ namespace ToDoListApp.GraphQL
                 resolve: context =>
                 {
                     var task = context.GetArgument<Task>("task");
-                    return taskRepository.Create(task);
+                    taskRepository.Create(task);
+                    return task;
+                }
+                );
+            Field<TaskType>(
+                "editTask",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<EditTaskInputType>> { Name = "task" }),
+                resolve: context =>
+                {
+                    var task = context.GetArgument<Task>("task");
+                    var taskId = task.TaskId;
+                    taskRepository.EditTask(taskId, task);
+                    return task;
                 }
                 );
             Field<TaskType>(
@@ -52,7 +66,6 @@ namespace ToDoListApp.GraphQL
                     var providerName = context.GetArgument<string>("providerName");
                     var currentProvider = DataProvider.CurrentProvider;
                     DataProvider.ChangeProvider(providerName);
-                    TaskMutation taskMutation = new TaskMutation(taskRepositories);
                     return $"current data provider has been changed from {currentProvider} to {providerName}";
                 }
                 );

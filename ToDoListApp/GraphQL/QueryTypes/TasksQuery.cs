@@ -12,8 +12,10 @@ namespace ToDoListApp.GraphQL
 {
     public class TasksQuery : ObjectGraphType
     {
-        public TasksQuery(ITaskRepository taskRepository)
+        private readonly ITaskRepository taskRepository;
+        public TasksQuery(IEnumerable<ITaskRepository> taskRepositories)
         {
+            taskRepository = taskRepositories.Where(t => t.ProviderName == DataProvider.CurrentProvider).FirstOrDefault();
             Field<ListGraphType<TaskType>>(
                 "completedTasks",
                 resolve: context => taskRepository.GetCompletedTasks()
@@ -27,6 +29,10 @@ namespace ToDoListApp.GraphQL
                 "Returns task by id",
                 new QueryArguments(new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "TaskId", Description = "Task Id" }),
                 resolve: context => taskRepository.GetTaskById(context.GetArgument("TaskId",int.MinValue)));
+            Field<StringGraphType>(
+                "getCurrentDataProvider",
+                resolve: context => DataProvider.CurrentProvider
+                );
         }
     }
 }

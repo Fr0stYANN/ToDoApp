@@ -43,6 +43,17 @@
         </div>
     </div>
 </form>
+<form asp-action="ChangeFiltration">
+    <select name="CategoryId" >
+        <option value="null">Any</option>
+        @foreach (
+           var item in Model.Categories)
+        {
+            <option value="@item.CategoryId">@item.CategoryName</option>
+        }
+        <input type="submit" value="filter" />
+    </select>
+</form>
     <h2 class="mx-auto" style="width: 300px; font-family: Oswald; text-align: center;">Not Completed:</h2>
     @foreach (
      var item in Model.NotCompletedTasksViewModels)

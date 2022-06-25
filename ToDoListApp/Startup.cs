@@ -44,8 +44,19 @@ namespace ToDoListApp
             services.AddScoped<ITaskRepository, XmlTaskRepository>();
             services.AddScoped<ToDoAppSchema>();
             services.AddGraphQL().AddSystemTextJson()
-                .AddGraphTypes(typeof(ToDoAppSchema),ServiceLifetime.Scoped);
+                .AddGraphTypes(typeof(ToDoAppSchema),ServiceLifetime.Scoped)
+                .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true);
             services.AddDatabaseDeveloperPageExceptionFilter();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("DefaultPolicy", services =>
+                {
+                    services.AllowAnyHeader()
+                            .WithMethods("POST")
+                            .WithOrigins("http://localhost:3000")
+                            .AllowCredentials();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +65,7 @@ namespace ToDoListApp
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseCors("DefaultPolicy");
             }
             else
             {
@@ -61,10 +73,10 @@ namespace ToDoListApp
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
             app.UseGraphQL<ToDoAppSchema>();
+            app.UseHttpsRedirection();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

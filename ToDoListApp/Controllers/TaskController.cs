@@ -28,6 +28,7 @@ namespace ToDoListApp.Controllers
         private readonly ITaskRepository taskRepo;
         private readonly ICategoryRepository categoryRepo;
         private readonly IMapper mapper;
+        public int? FiltrationByCategory { get; set; } = null;
         public TaskController(IEnumerable<ITaskRepository> taskRepositories, IEnumerable<ICategoryRepository> categoryRepositories, IMapper mapper)
         {
             taskRepo = taskRepositories.Where(t => t.ProviderName == DataProvider.CurrentProvider).FirstOrDefault();
@@ -36,18 +37,33 @@ namespace ToDoListApp.Controllers
         }
         public ActionResult Index()
         {
-            //IndexViewModel indexViewModel = new IndexViewModel();
-            var completedTasks = taskRepo.GetCompletedTasks();
-            var notCompletedTasks = taskRepo.GetNotCompletedTasks();
+            List<Task> FiltratedCompletedTasks = new List<Task>();
+            List<Task> FiltratedNotCompletedTasks = new List<Task>();
+            List<Task> completedTasks = taskRepo.GetCompletedTasks();
+            List<Task> notCompletedTasks = taskRepo.GetNotCompletedTasks();
+            if(FiltrationByCategory != null)
+            {
+                FiltratedCompletedTasks = (List<Task>)(from task in completedTasks
+                                      where task.CategoryId == FiltrationByCategory
+                                      select task);
+                FiltratedNotCompletedTasks = (List<Task>)(from task in notCompletedTasks
+                                                          where task.CategoryId == FiltrationByCategory
+                                                          select task);
+            }
+            else
+            {
+                FiltratedCompletedTasks = completedTasks;
+                FiltratedNotCompletedTasks = notCompletedTasks;
+            }
             var categories = categoryRepo.GetCategories();
             return View("Index", new IndexViewModel()
             {
                 Categories = mapper.
                 Map<List<CategoriesViewModel>>(categories),
                 CompletedTasksViewModels = mapper.
-                Map<List<CompletedTasksViewModel>>(completedTasks),
+                Map<List<CompletedTasksViewModel>>(FiltratedCompletedTasks),
                 NotCompletedTasksViewModels = mapper.
-                Map<List<NotCompletedTasksViewModel>>(notCompletedTasks)
+                Map<List<NotCompletedTasksViewModel>>(FiltratedNotCompletedTasks)
             });
         }
         [HttpPost]
@@ -110,6 +126,12 @@ namespace ToDoListApp.Controllers
             var taskId = Task.TaskId;
             taskRepo.EditTask(taskId, Task);
             return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public ActionResult ChangeFiltration(int CategoryId)
+        {
+            FiltrationByCategory = CategoryId;
+            return RedirectToAction(nameof(Index));
         }
     }
 }
