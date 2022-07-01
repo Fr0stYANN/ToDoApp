@@ -31,8 +31,9 @@ namespace ToDoListApp.SQL
         {
             using (IDbConnection db = new SqlConnection(ConnectionString))
             {
-                var sqlQuery = "Insert INTO Categories(CategoryName) VALUES (@CategoryName)";
-                return db.Execute(sqlQuery, category);
+                var sqlQuery = "Insert INTO Categories(CategoryName) OUTPUT INSERTED.CategoryId VALUES (@CategoryName)";
+                var categoryId = db.ExecuteScalar<int>(sqlQuery, category);
+                return categoryId;
             }
         }
 

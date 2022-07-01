@@ -16,21 +16,28 @@ namespace ToDoListApp.XML
         XmlSerializer xmlSerializer = new XmlSerializer(typeof(DataContainer));
         public int CreateCategory(Category category)
         {
+            int categoryId;
             DataContainer? data = new DataContainer();
             using (FileStream fs = new FileStream(@"C:\Users\Phoenix\Desktop\Ism Company Course Projects\ToDoListApp\ToDoListApp.XML\Tasks.xml", FileMode.OpenOrCreate))
             {
                 data = (DataContainer?)xmlSerializer.Deserialize(fs);
                 if (data.Categories == null)
+                {
                     category.CategoryId = 1;
+                    categoryId = category.CategoryId;
+                }
                 else
+                {
                     category.CategoryId = data.Categories.Count + 1;
+                    categoryId = category.CategoryId;
+                }
                 data.Categories.Add(category);
             }
             using (FileStream fs = new FileStream(@"C:\Users\Phoenix\Desktop\Ism Company Course Projects\ToDoListApp\ToDoListApp.XML\Tasks.xml", FileMode.Truncate))
             {
                 xmlSerializer.Serialize(fs, data);
             }
-            return 0;
+            return categoryId;
         }
 
         public List<Category> GetCategories()

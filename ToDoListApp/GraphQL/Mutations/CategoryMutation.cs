@@ -22,8 +22,9 @@ namespace ToDoListApp.GraphQL
                 resolve: context =>
                 {
                     var category = context.GetArgument<Category>("category");
-                    categoryRepository.CreateCategory(category);
-                    return category;
+                    var categoryId = categoryRepository.CreateCategory(category);
+                    var createdCategory = categoryRepository.GetCategoryById(categoryId);
+                    return createdCategory;
                 }
                 );
             Field<CategoryType>(

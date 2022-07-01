@@ -14,23 +14,30 @@ namespace ToDoListApp.XML
     {
         public string ProviderName => "XML";
         XmlSerializer xmlSerializer = new XmlSerializer(typeof(DataContainer));
-        public Task<int> Create(Task task)
+        public int Create(Task task)
         {
             DataContainer? data;
+            int taskId;
             using (FileStream fs = new FileStream(@"C:\Users\Phoenix\Desktop\Ism Company Course Projects\ToDoListApp\ToDoListApp.XML\Tasks.xml", FileMode.OpenOrCreate))
             {
                 data = (DataContainer?)xmlSerializer.Deserialize(fs);
                 if (data == null || data.Tasks == null)
+                {
                     task.TaskId = 1;
+                    taskId = task.TaskId;
+                }
                 else
+                {
                     task.TaskId = data.Tasks.Count + 1;
+                    taskId = task.TaskId;
+                }
             }
             using (FileStream fs = new FileStream(@"C:\Users\Phoenix\Desktop\Ism Company Course Projects\ToDoListApp\ToDoListApp.XML\Tasks.xml", FileMode.Truncate))
             {
                 data.Tasks.Add(task);
                 xmlSerializer.Serialize(fs, data);
             }
-            return null;
+            return taskId;
         }
 
         public int Delete(int id)

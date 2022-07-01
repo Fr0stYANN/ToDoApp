@@ -31,12 +31,13 @@ namespace ToDoListApp.SQL
                 return result.ToList();
             }
         }
-        public async Task<int> Create(BusinessLogic.Models.Task task)
+        public int Create(BusinessLogic.Models.Task task)
         {
             using (IDbConnection db = new SqlConnection(ConnectionString))
             {
-                var sqlQuery = "INSERT INTO Tasks(TaskName,IsDone,DueDate,CategoryId) VALUES(@TaskName,@IsDone,@DueDate,@CategoryId)";
-                return (await db.ExecuteAsync(sqlQuery, task));
+                var sqlQuery = "INSERT INTO Tasks(TaskName,IsDone,DueDate,CategoryId) OUTPUT INSERTED.TaskId VALUES(@TaskName,@IsDone,@DueDate,@CategoryId)";
+                var res = db.ExecuteScalar<int>(sqlQuery, task);
+                return res;
             }
         }
         public int Update(int TaskId, DateTime DoneDate)

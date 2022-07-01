@@ -22,8 +22,9 @@ namespace ToDoListApp.GraphQL
                 resolve: context =>
                 {
                     var task = context.GetArgument<Task>("task");
-                    taskRepository.Create(task);
-                    return task;
+                    var taskId =  taskRepository.Create(task);
+                    var createdTask =  taskRepository.GetTaskById(taskId);
+                    return createdTask;
                 }
                 );
             Field<TaskType>(
@@ -66,7 +67,8 @@ namespace ToDoListApp.GraphQL
                     var providerName = context.GetArgument<string>("providerName");
                     var currentProvider = DataProvider.CurrentProvider;
                     DataProvider.ChangeProvider(providerName);
-                    return $"current data provider has been changed from {currentProvider} to {providerName}";
+                    var provider = DataProvider.CurrentProvider;
+                    return provider;
                 }
                 );
         }
